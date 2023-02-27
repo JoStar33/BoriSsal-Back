@@ -37,11 +37,6 @@ const userSchema = new Schema({
     type: Date,
     default: Date.NOW,
     allowNull: true,
-  },
-  admin: {
-    type: Boolean,
-    default: false,
-    allowNull: false,
   }
 });
 
