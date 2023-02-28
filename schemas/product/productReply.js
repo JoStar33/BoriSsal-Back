@@ -1,7 +1,14 @@
 const mongoose = require('mongoose');
-
+const { replySchema } = require('../reply');
 const { Schema } = mongoose;
 
-const productReply = new Schema({
-  
+const productReplySchema = new Schema({
+  ...replySchema.obj,
+  product_id: {
+    type: ObjectId,
+    required: true,
+    ref: 'Product',
+  }
 });
+
+module.exports = mongoose.model('ProductReply', productReplySchema);
