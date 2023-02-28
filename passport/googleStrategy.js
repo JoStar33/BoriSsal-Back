@@ -10,7 +10,7 @@ module.exports = () => {
   }, async (accessToken, refreshToken, profile, done) => {
     try {
       const exUser = await User.findOne({
-        where: { snsId: profile.id, provider: 'google' },
+        where: { sns_id: profile.id, provider: 'google' },
       });
       if (exUser) {
         done(null, exUser);
@@ -18,7 +18,7 @@ module.exports = () => {
         const newUser = await User.create({
           email: profile.emails[0].value,
           nick: profile.displayName,
-          snsId: profile.id,
+          sns_id: profile.id,
           provider: 'google',
         });
         done(null, newUser);
