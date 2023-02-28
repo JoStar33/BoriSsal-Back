@@ -1,13 +1,14 @@
 const mongoose = require('mongoose');
-
+const { Types: { ObjectId } } = Schema;
 const { Schema } = mongoose;
 
 const replySchema = new Schema({
-  content: {
-    type: String,
-    allowNull: false,
+  user_id: {
+    type: ObjectId,
+    required: true,
+    ref: 'User',
   },
-  writer_nickname: {
+  content: {
     type: String,
     allowNull: false,
   },
