@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const { Types: { ObjectId } } = Schema;
-const { replySchema } = require('../reply');
+const { replySchema } = require('../common/reply');
 const { Schema } = mongoose;
 
 const boriGalleryReplySchema = new Schema({
