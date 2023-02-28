@@ -1,7 +1,7 @@
 const express = require("express");
 const passport = require("passport");
 const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
-const { join, login, logout, kakaoLogin } = require('../controllers/auth');
+const { join, login, logout, kakaoLogin, googleLogin } = require('../controllers/auth');
 const router = express.Router();
 
 // POST /auth/join
@@ -18,5 +18,11 @@ router.get('/kakao', passport.authenticate('kakao'));
 
 // GET /auth/kakao/callback
 router.get('/kakao/callback', isNotLoggedIn, kakaoLogin);
+
+// GET /auth/google
+router.get('/google', passport.authenticate('google'));
+
+// GET /auth/google
+router.get('/google/callback', isNotLoggedIn, googleLogin);
 
 module.exports = router;

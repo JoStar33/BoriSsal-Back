@@ -76,6 +76,32 @@ exports.kakaoLogin = (req, res, next) => {
   })(req, res, next);
 }
 
+exports.googleLogin = (req, res, next) => {
+  passport.authenticate('google', (authError, user, info) => {
+    if (authError) {
+      console.error(authError);
+      return next(authError);
+    }
+    if (!user) {
+      return res.status(500).json({
+        code: 500,
+        message: info.message,
+      });
+    }
+    return req.login(user, (loginError) => {
+      if (loginError) {
+        console.error(loginError);
+        return next(loginError);
+      }
+      return res.json({
+        id: user._id,
+        email: user.email,
+        nick: user.nick,
+      });
+    });
+  })(req, res, next);
+}
+
 exports.logout = (req, res) => {
   req.logout(() => {
     res.status(200).send('로그아웃이 성공적으로 완료됐습니다.');
