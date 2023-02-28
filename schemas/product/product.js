@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-  category_code: {
+  category_id: {
     type: ObjectId,
     required: true,
     ref: 'ProductCategory',
@@ -21,6 +21,10 @@ const productSchema = new Schema({
     allowNull: false,
   },
   product_desc: {
+    type: String,
+    allowNull: false,
+  },
+  product_img: {
     type: String,
     allowNull: false,
   },
