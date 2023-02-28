@@ -12,10 +12,6 @@ const replySchema = new Schema({
     type: String,
     allowNull: false,
   },
-  created_at: {
-    type: Date,
-    default: Date.NOW,
-  },
   //부모댓글
   reply_origin_number: {
     type: Number
@@ -24,7 +20,11 @@ const replySchema = new Schema({
   reply_order: {
     type: Number,
     allowNull: false,
-  }
+  },
+  created_at: {
+    type: Date,
+    default: Date.NOW,
+  },
 });
 
 module.exports = { replySchema };

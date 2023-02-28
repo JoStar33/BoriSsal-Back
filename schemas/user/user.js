@@ -29,7 +29,7 @@ const userSchema = new Schema({
     type: Number,
     allowNull: false,
   },
-  snsId: {
+  sns_id: {
     type: String,
     allowNull: true,
   },
@@ -37,15 +37,6 @@ const userSchema = new Schema({
     type: Date,
     default: Date.NOW,
   },
-  updated_at: {
-    type: Date,
-    allowNull: true,
-  },
-  deleted_at: {
-    type: Date,
-    default: Date.NOW,
-    allowNull: true,
-  }
 });
 
 module.exports = mongoose.model('User', userSchema);
