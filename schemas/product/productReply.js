@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { Types: { ObjectId } } = Schema;
 const { replySchema } = require('../reply');
 const { Schema } = mongoose;
 

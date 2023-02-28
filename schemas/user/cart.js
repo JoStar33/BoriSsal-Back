@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 
-const CartSchema = new Schema({
+const cartSchema = new Schema({
   product_id: {
     type: ObjectId,
     required: true,
@@ -19,4 +19,4 @@ const CartSchema = new Schema({
   }
 });
 
-module.exports = mongoose.model('Cart', CartSchema);
+module.exports = mongoose.model('Cart', cartSchema);

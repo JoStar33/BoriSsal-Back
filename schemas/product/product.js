@@ -1,3 +1,4 @@
+const { Types: { ObjectId } } = Schema;
 const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
