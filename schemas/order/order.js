@@ -7,9 +7,16 @@ const orderSchema = new Schema({
   user_id: {
     type: ObjectId,
     required: true,
-    ref: "User"
+    ref: "User",
   },
-  product_number: {
-    type: ObjectId
+  order_date: {
+    type: Date,
+    default: Date.NOW,
+  },
+  order_status: {
+    type: String,
+    required: true,
   }
 });
+
+module.exports = mongoose.model('Order', orderSchema);
