@@ -17,14 +17,6 @@ passportConfig(); // 패스포트 설정
 app.set('port', process.env.PORT || 3030);
 connect();
 
-/*
-{
-  origin: 'http://localhost:3000', // 출처 허용 옵션
-  credentials: true, // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
-  exposedHeaders: ["Authorization"],
-}
-*/
-
 app.use(morgan('dev'));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
