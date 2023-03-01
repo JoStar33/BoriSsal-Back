@@ -67,11 +67,12 @@ exports.kakaoLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.json({
+      res.json({
         id: user._id,
         email: user.email,
         nick: user.nick,
       });
+      res.redirect('http://');
     });
   })(req, res, next);
 }
@@ -93,11 +94,12 @@ exports.googleLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.json({
+      res.json({
         id: user._id,
         email: user.email,
         nick: user.nick,
       });
+      res.redirect('http://');
     });
   })(req, res, next);
 }
