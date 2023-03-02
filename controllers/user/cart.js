@@ -4,7 +4,9 @@ const Cart = require("../../schemas/user/cart");
 //상세 장바구니 조회는 기능이 필요없다고 판단함.
 exports.getCart = async (req, res, next) => {
   try {
-    const cart = await Cart.find();
+    const cart = await Cart.find({
+      user_id: req.params.user_id
+    });
     return res.status(200).json(cart);
   } catch(error) {
     console.error(error);
@@ -42,12 +44,10 @@ exports.makeCart = async (req, res, next) => {
 
 //수량을 수정하는 경우밖에 없으므로
 exports.modifyCart = async (req, res, next) => {
-  const { cart_id, product } = req.body;
+  const { cart_id, product_count } = req.body;
   try {
-    const cart = await Cart.update({
-      _id: cart_id
-    }, {
-      product_count: product.product_count
+    const cart = await Cart.findByIdAndUpdate(cart_id, {
+      product_count: product_count
     });
     return res.status(200).json(cart);
   } catch(error) {

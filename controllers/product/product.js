@@ -26,7 +26,7 @@ exports.getProductById = async (req, res, next) => {
 exports.makeProduct = async (req, res, next) => {
   try {
     const exProduct = await Product.find({
-      product_name: req.body.product_name
+      product_name: req.body.product.product_name
     });
     if(exProduct.length >= 1) {
       return res.status(400).json("이미 존재하는 상품입니다. 다시 등록해주세요.");
@@ -34,11 +34,11 @@ exports.makeProduct = async (req, res, next) => {
     const newProduct = await Product.create(
       {
         category_id: req.body.category_id,
-        product_name: req.body.product_name,
-        product_price: req.body.product_price,
-        product_stock: req.body.product_stock,
-        product_desc: req.body.product_desc,
-        product_img: req.body.product_img,
+        product_name: req.body.product.product_name,
+        product_price: req.body.product.product_price,
+        product_stock: req.body.product.product_stock,
+        product_desc: req.body.product.product_desc,
+        product_img: req.body.product.product_img,
       }
     );
     console.log(newProduct._id);

@@ -1,4 +1,3 @@
-const Product = require("../../schemas/product/product");
 const ProductReplySchema = require("../../schemas/product/productReply")
 
 //제품에 대한 모든 댓글정보를 가지고 온다.
@@ -22,7 +21,7 @@ exports.makeProductReply = async (req, res, next) => {
     const productReply = await ProductReplySchema.create({
       user_id: req.body.user_id,
       product_id: req.body.product_id,
-      content: req.body.productReply.content,
+      content: req.body.content,
       reply_child: []
     });
     return res.status(200).json(productReply);

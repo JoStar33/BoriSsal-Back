@@ -24,9 +24,7 @@ exports.makeCategory = async (req, res, next) => {
 
 exports.updateCategory = async (req, res, next) => {
   try {
-    const productCategory = await ProductCategory.update({
-      _id: req.body.category_id
-    }, {
+    const productCategory = await ProductCategory.findByIdAndUpdate(req.body.category_id, {
       category_name: req.body.category_name
     });
     return res.status(200).json(productCategory);
@@ -38,7 +36,7 @@ exports.updateCategory = async (req, res, next) => {
 
 exports.deleteCategory = async (req, res, next) => {
   try {
-    const productCategory = await ProductCategory.remove({
+    await ProductCategory.remove({
       _id: req.body.category_id
     });
     return res.status(200).send("카테고리 삭제 완료");
