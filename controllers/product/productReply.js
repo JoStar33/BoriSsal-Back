@@ -1,6 +1,20 @@
 const Product = require("../../schemas/product/product");
 const ProductReplySchema = require("../../schemas/product/productReply")
 
+//제품에 대한 모든 댓글정보를 가지고 온다.
+exports.getProductReply = async (req, res, next) => {
+  try {
+    const productReply = await ProductReplySchema.find({
+      product_id: req.params.product_id
+    });
+    return res.status(200).json(productReply);
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  };
+};
+
+
 //상품 정보, 댓글 정보
 //맨처음 댓글을 생성한 케이스.
 exports.makeProductReply = async (req, res, next) => {

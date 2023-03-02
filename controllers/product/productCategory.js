@@ -1,5 +1,15 @@
 const ProductCategory = require("../../schemas/product/productCategory")
 
+exports.getCategory = async (req, res, next) => {
+  try {
+    const productCategory = await ProductCategory.findAll({});
+    return res.status(200).json(productCategory);
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  };
+};
+
 exports.makeCategory = async (req, res, next) => {
   try {
     const productCategory = await ProductCategory.create({
