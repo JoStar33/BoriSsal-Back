@@ -1,6 +1,5 @@
 const { Types: { ObjectId } } = Schema;
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
@@ -24,6 +23,10 @@ const productSchema = new Schema({
   product_desc: {
     type: String,
     allowNull: false,
+  },
+  product_like: {
+    type: Number,
+    default: 0
   },
   product_img: {
     type: String,
