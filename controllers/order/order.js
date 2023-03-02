@@ -4,7 +4,7 @@ const Order = require("../../schemas/order/order");
 
 exports.getOrder = async (req, res, next) => {
   try {
-    const order = await Order.findAll({}); 
+    const order = await Order.find({}); 
     return res.status(200).json(order);
   } catch(error) {
     console.error(error);

@@ -2,7 +2,7 @@ const ProductCategory = require("../../schemas/product/productCategory")
 
 exports.getCategory = async (req, res, next) => {
   try {
-    const productCategory = await ProductCategory.findAll({});
+    const productCategory = await ProductCategory.find({});
     return res.status(200).json(productCategory);
   } catch(error) {
     console.error(error);
