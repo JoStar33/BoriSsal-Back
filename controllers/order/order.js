@@ -1,4 +1,4 @@
-const Order = require("../schemas/order/order");
+const Order = require("../../schemas/order/order");
 //const OrderDetail = require("../schemas/order/orderDetail");
 
 exports.getOrder = async (req, res, next) => {
@@ -11,6 +11,7 @@ exports.getOrder = async (req, res, next) => {
   };
 };
 
+//주문 하나에 대한 정보 조회
 exports.getOrderById = async (req, res, next) => {
   try {
     const order = await Order.find({

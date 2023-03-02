@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require("../schemas/user");
-const DeliverAddress = require("../schemas/user/deliverAddress")
+const DeliverAddress = require("../../schemas/user/deliverAddress")
 
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;

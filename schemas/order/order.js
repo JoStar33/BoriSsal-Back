@@ -18,7 +18,8 @@ const orderSchema = new Schema({
     required: true,
   },
   order_detail: {
-    type: Array
+    type: Array,
+    default: []
   }
 });
 

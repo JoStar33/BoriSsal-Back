@@ -1,5 +1,5 @@
-const Product = require("../schemas/product/product");
-const User = require("../schemas/user/user")
+const Product = require("../../schemas/product/product");
+const User = require("../../schemas/user/user")
 
 exports.getProduct = async (req, res, next) => {
   try {
@@ -61,20 +61,42 @@ exports.makeProduct = async (req, res, next) => {
 */
 exports.likeProduct = async (req, res, next) => {
   try {
-    const product = await Product.findByIdAndUpdate(
-      res.body.product_id, {
+    await Product.findByIdAndUpdate(
+      req.body.product_id, {
         product_like: { $inc: 1 }
       }
     );
     const user = await User.findByIdAndUpdate(
-      res.body.user_id, {
-        $push: { user_like: res.body.product_id }
+      req.body.user_id, {
+        $push: { user_like: req.body.product_id }
       }
     );
+    res.status(200).json({
+      user_like: user.user_like
+    });
   } catch(error) {
     console.error(error);
     return next(error);
   }
 };
 
-exports.product
+exports.dislikeProduct = async (req, res, next) => {
+  try {
+    await Product.findByIdAndUpdate(
+      req.body.product_id, {
+        product_like: { $inc: -1 }
+      }
+    );
+    const user = await User.findByIdAndUpdate(
+      req.body.user_id, {
+        $pull: { user_like: req.body.product_id }
+      }
+    );
+    res.status(200).json({
+      user_like: user.user_like
+    });
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  }
+};
