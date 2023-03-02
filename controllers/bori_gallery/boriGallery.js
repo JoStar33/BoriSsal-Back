@@ -42,7 +42,7 @@ exports.makeBoriGallery = async (req, res, next) => {
 exports.updateBoriGallery = async (req, res, next) => {
   const { bori_gallery } = req.body;
   try {  
-    const boriGallery = await BoriGallery.findByIdAndUpdate(bori_gallery._id, {
+    const boriGallery = await BoriGallery.findByIdAndUpdate(bori_gallery.bori_gallery_id, {
       bori_gallery_title: bori_gallery.bori_gallery_title,
       bori_gallery_desc: bori_gallery.bori_gallery_desc
     });
@@ -55,7 +55,7 @@ exports.updateBoriGallery = async (req, res, next) => {
 
 exports.updateBoriGalleryImage = async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.params.user_id, {
+    await User.findByIdAndUpdate(req.body.bori_gallery_id, {
       profile_image: `/img/${req.file.filename}`,
     });
     res.status.json(`/img/${req.file.filename}`);
