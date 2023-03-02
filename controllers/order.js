@@ -1,5 +1,5 @@
 const Order = require("../schemas/order/order");
-const OrderDetail = require("../schemas/order/orderDetail");
+//const OrderDetail = require("../schemas/order/orderDetail");
 
 exports.getOrder = async (req, res, next) => {
   try {
@@ -41,11 +41,13 @@ exports.deleteOrder = async (req, res, next) => {
     user: {
       user_id: ~
     },
-    product: {
-      product_id: ~,
-      product_count: ~,
-      product_price: ~
-    }
+    products: [
+      {
+        product_id: ~,
+        product_count: ~,
+        product_price: ~
+      }
+    ],
   ]
 */
 exports.makeOrder = async (req, res, next) => {
@@ -54,7 +56,7 @@ exports.makeOrder = async (req, res, next) => {
       {
         user_id: req.body.user.user_id,
         order_status: false,
-        orderDetail: req.body.product
+        orderDetail: req.body.products
       }
     );
     console.log("주문아이디: " + newOrder._id);
