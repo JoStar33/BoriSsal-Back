@@ -1,6 +1,6 @@
 const express = require("express");
 const { isLoggedIn } = require("../../middlewares");
-const { modifyUserNick, setUserProfileImage } = require("../../controllers/user/user")
+const { modifyUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
 const router = express.Router();
 
 try {
@@ -22,6 +22,8 @@ const upload = multer({
   }),
   limits: { fileSize: 5 * 1024 * 1024 },
 });
+
+router.get('/:user_id', isLoggedIn, getUserInfo);
 
 router.patch('/nick', isLoggedIn, modifyUserNick);
 
