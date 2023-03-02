@@ -13,9 +13,9 @@ exports.getProduct = async (req, res, next) => {
 
 exports.getProductById = async (req, res, next) => {
   try {
-    const product = await Product.find({
-      product_id: req.params.product_id
-    }); 
+    const product = await Product.findById(
+      req.params.product_id
+    ); 
     return res.status(200).json(product);
   } catch(error) {
     console.error(error);
@@ -68,11 +68,11 @@ exports.likeProduct = async (req, res, next) => {
     );
     const user = await User.findByIdAndUpdate(
       req.body.user_id, {
-        $push: { user_like: req.body.product_id }
+        $push: { user_product_like: req.body.product_id }
       }
     );
     res.status(200).json({
-      user_like: user.user_like
+      user_product_like: user.user_product_like
     });
   } catch(error) {
     console.error(error);
@@ -89,11 +89,11 @@ exports.dislikeProduct = async (req, res, next) => {
     );
     const user = await User.findByIdAndUpdate(
       req.body.user_id, {
-        $pull: { user_like: req.body.product_id }
+        $pull: { user_product_like: req.body.product_id }
       }
     );
     res.status(200).json({
-      user_like: user.user_like
+      user_product_like: user.user_product_like
     });
   } catch(error) {
     console.error(error);

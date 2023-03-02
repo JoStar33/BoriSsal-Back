@@ -39,7 +39,11 @@ const userSchema = new Schema({
     type: Date,
     default: Date.NOW,
   },
-  user_like: {
+  user_product_like: {
+    type: Array,
+    default: []
+  },
+  user_bori_gallery_like: {
     type: Array,
     default: []
   }
