@@ -1,9 +1,9 @@
-const ProductReplySchema = require("../../schemas/product/productReply")
+const ProductReply = require("../../schemas/product/productReply")
 
 //제품에 대한 모든 댓글정보를 가지고 온다.
 exports.getProductReply = async (req, res, next) => {
   try {
-    const productReply = await ProductReplySchema.find({
+    const productReply = await ProductReply.find({
       product_id: req.params.product_id
     });
     return res.status(200).json(productReply);
@@ -18,7 +18,7 @@ exports.getProductReply = async (req, res, next) => {
 //맨처음 댓글을 생성한 케이스.
 exports.makeProductReply = async (req, res, next) => {
   try {
-    const productReply = await ProductReplySchema.create({
+    const productReply = await ProductReply.create({
       user_id: req.body.user_id,
       product_id: req.body.product_id,
       content: req.body.content,
@@ -41,7 +41,7 @@ exports.makeProductReply = async (req, res, next) => {
 */
 exports.makeProductChildReply = async (req, res, next) => {
   try {
-    await ProductReplySchema.findByIdAndUpdate(req.body.reply_id, {
+    await ProductReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         user_id: req.body.user_id,
         content: req.body.content,
@@ -64,7 +64,7 @@ exports.makeProductChildReply = async (req, res, next) => {
 */
 exports.updateProductReply = async (req, res, next) => {
   try {
-    const productReply = await ProductReplySchema.findByIdAndUpdate(req.body.reply_id, {
+    const productReply = await ProductReply.findByIdAndUpdate(req.body.reply_id, {
       content: req.body.content
     });
     return res.status(200).json(productReply);
@@ -84,7 +84,7 @@ exports.updateProductReply = async (req, res, next) => {
 */
 exports.updateProductChildReply = async (req, res, next) => {
   try {
-    await ProductReplySchema.updateOne({ _id: req.body.reply_id, "reply_child._id": req.body.child_reply_id}, {
+    await ProductReply.updateOne({ _id: req.body.reply_id, "reply_child._id": req.body.child_reply_id}, {
       $set: { "reply_child.$.content": req.body.content }
     });
     return res.status(200).json("댓글 업데이트 완료.");
@@ -101,7 +101,7 @@ exports.updateProductChildReply = async (req, res, next) => {
 */
 exports.deleteProductReply = async (req, res, next) => {
   try {
-    await ProductReplySchema.remove({
+    await ProductReply.remove({
       _id: req.body.reply_id
     });
     return res.status(200).json("댓글 삭제 완료.");
@@ -119,7 +119,7 @@ exports.deleteProductReply = async (req, res, next) => {
 */
 exports.deleteProductChildReply = async (req, res, next) => {
   try {
-    await ProductReplySchema.findByIdAndUpdate(req.body.reply_id, {
+    await ProductReply.findByIdAndUpdate(req.body.reply_id, {
       $pull: { user_like: req.body.child_reply_id }
     });
     return res.status(200).json("대댓글 삭제 완료.");
