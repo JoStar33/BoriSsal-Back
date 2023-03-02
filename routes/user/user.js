@@ -23,10 +23,13 @@ const upload = multer({
   limits: { fileSize: 5 * 1024 * 1024 },
 });
 
+//GET /user/:user_id
 router.get('/:user_id', isLoggedIn, getUserInfo);
 
+//PATCH /user/nick
 router.patch('/nick', isLoggedIn, modifyUserNick);
 
+//POST /user/profile-image
 router.post('/profile-image', isLoggedIn, upload.single('img'), setUserProfileImage)
 
 module.exports = router;

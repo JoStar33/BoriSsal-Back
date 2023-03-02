@@ -3,12 +3,12 @@ const { isLoggedIn } = require("../../middlewares");
 const { getCart, makeCart, modifyCart, deleteCart } = require("../../controllers/user/cart")
 const router = express.Router();
 /*
-GET /:user_id
+GET /cart/:user_id
 */
 router.get('/:user_id', isLoggedIn, getCart);
 
 /*
-POST /
+POST /cart
 {
   user_id: ~~,
   product: [
@@ -22,7 +22,7 @@ POST /
 router.post('/', isLoggedIn, makeCart);
 
 /*
-PATCH /
+PATCH /cart
 {
   cart_id: ~~~,
   product_count: ~~~
@@ -31,7 +31,7 @@ PATCH /
 router.patch('/', isLoggedIn, modifyCart);
 
 /*
-DELETE /
+DELETE /cart
 {
   cart_id: ~~~
 }
