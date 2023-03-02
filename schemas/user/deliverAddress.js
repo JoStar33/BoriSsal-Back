@@ -8,6 +8,10 @@ const deliverAddressSchema = new Schema({
     required: true,
     ref: 'User',
   },
+  phone_number: {
+    type: String,
+    required: true
+  },
   address: {
     type: String,
     required: true
