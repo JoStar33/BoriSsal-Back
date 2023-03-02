@@ -19,7 +19,7 @@ const boriGallerySchema = new Schema({
   },
   bori_gallery_like: {
     type: Number,
-    allowNull: false,
+    default: 0
   },
   bori_gallery_img: {
     type: String,
