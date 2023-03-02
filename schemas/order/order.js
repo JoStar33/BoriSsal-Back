@@ -16,6 +16,9 @@ const orderSchema = new Schema({
   order_status: {
     type: String,
     required: true,
+  },
+  order_detail: {
+    type: Array
   }
 });
 
