@@ -12,9 +12,7 @@ exports.getUserInfo = async (req, res, next) => {
 
 exports.modifyUserNick = async (req, res, next) => {
   try {
-    await User.update({
-      user_id: req.params.user_id
-    }, {
+    await User.findByIdAndUpdate(req.params.user_id, {
       nick: req.body.nick,
     });
     return res.status(200).send("유저 닉네임 업데이트 완료");
@@ -26,11 +24,10 @@ exports.modifyUserNick = async (req, res, next) => {
 
 exports.setUserProfileImage = async (req, res, next) => {
   try {
-    await User.update({
-      user_id: req.params.user_id
-    }, {
+    await User.findByIdAndUpdate(req.params.user_id, {
       profile_image: `/img/${req.file.filename}`,
     });
+    res.status.json(`/img/${req.file.filename}`);
   } catch(error) {
     console.error(error);
     return next(error);
