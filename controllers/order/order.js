@@ -4,7 +4,9 @@ const Order = require("../../schemas/order/order");
 
 exports.getOrder = async (req, res, next) => {
   try {
-    const order = await Order.find({}); 
+    const order = await Order.find({
+      user_id: req.params.user_id
+    }); 
     return res.status(200).json(order);
   } catch(error) {
     console.error(error);
@@ -56,7 +58,7 @@ exports.makeOrder = async (req, res, next) => {
   try {
     const newOrder = await Order.create(
       {
-        user_id: req.body.user.user_id,
+        user_id: req.body.user_id,
         order_status: false,
         orderDetail: req.body.products
       }
