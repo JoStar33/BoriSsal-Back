@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require("../schemas/user");
+const DeliverAddress = require("../schemas/user/deliverAddress")
 
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
@@ -12,10 +13,16 @@ exports.join = async (req, res, next) => {
         .json({ message: "해당 이메일은 이미 존재합니다." });
     }
     const hash = await bcrypt.hash(password, 12);
-    await User.create({
+    const user = await User.create({
       email,
       nick,
       password: hash,
+    }).then(() => {
+      DeliverAddress.create({
+        user_id: user.user_id,
+        address: "",
+        address_detail: ""
+      });
     });
     return res.status(200).send('회원가입이 정상적으로 이루어졌습니다.');
   } catch (error) {
