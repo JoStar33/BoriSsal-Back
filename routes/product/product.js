@@ -2,6 +2,7 @@ const express = require("express");
 const { isLoggedIn } = require("../../middlewares");
 const { getProduct, getProductById, makeProduct, likeProduct, dislikeProduct } = require("../../controllers/product/product")
 const router = express.Router();
+const upload = require("../../utils/uploadImage")
 
 //GET /product
 router.get('/', getProduct);
@@ -22,7 +23,7 @@ POST /product
   }
 }
 */
-router.post('/', makeProduct);
+router.post('/', isLoggedIn, upload.single('img'), makeProduct);
 
 /*
 PATCH /product/like
@@ -31,7 +32,7 @@ PATCH /product/like
   user_id: ~~~
 }
 */
-router.patch('/like', likeProduct);
+router.patch('/like', isLoggedIn, likeProduct);
 
 /*
 PATCH /product/dislike
@@ -40,6 +41,6 @@ PATCH /product/dislike
   user_id: ~~~
 }
 */
-router.patch('/dislike', dislikeProduct);
+router.patch('/dislike', isLoggedIn, dislikeProduct);
 
 module.exports = router;

@@ -38,7 +38,7 @@ exports.makeProduct = async (req, res, next) => {
         product_price: req.body.product.product_price,
         product_stock: req.body.product.product_stock,
         product_desc: req.body.product.product_desc,
-        product_img: req.body.product.product_img,
+        product_img: `/img/${req.file.filename}`,
       }
     );
     console.log(newProduct._id);
