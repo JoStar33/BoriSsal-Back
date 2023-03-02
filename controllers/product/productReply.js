@@ -94,3 +94,38 @@ exports.updateProductChildReply = async (req, res, next) => {
     return next(error);
   }
 };
+
+/*
+  {
+    reply_id: ~~~
+  }
+*/
+exports.deleteProductReply = async (req, res, next) => {
+  try {
+    await ProductReplySchema.remove({
+      _id: req.body.reply_id
+    });
+    return res.status(200).json("댓글 삭제 완료.");
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  }
+};
+
+/*
+  {
+    reply_id: ~~~,
+    child_reply_id: ~~~
+  }
+*/
+exports.deleteProductChildReply = async (req, res, next) => {
+  try {
+    await ProductReplySchema.findByIdAndUpdate(req.body.reply_id, {
+      $pull: { user_like: req.body.child_reply_id }
+    });
+    return res.status(200).json("대댓글 삭제 완료.");
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  }
+};
