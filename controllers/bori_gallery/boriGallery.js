@@ -30,7 +30,7 @@ exports.makeBoriGallery = async (req, res, next) => {
       user_id: req.body.user_id,
       bori_gallery_title: bori_gallery.bori_gallery_title,
       bori_gallery_desc: bori_gallery.bori_gallery_desc,
-      bori_gallery_img: `/img/${req.file.filename}`
+      bori_gallery_image: `/img/${req.file.filename}`
     });
     return res.status(200).json(boriGallery);
   } catch(error) {

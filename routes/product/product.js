@@ -19,7 +19,7 @@ POST /product
     product_price: ~~~,
     product_stock: ~~~,
     product_desc: ~~~,
-    product_img: ~~~
+    product_image: ~~~
   }
 }
 */

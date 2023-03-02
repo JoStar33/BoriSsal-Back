@@ -21,7 +21,7 @@ const boriGallerySchema = new Schema({
     type: Number,
     default: 0
   },
-  bori_gallery_img: {
+  bori_gallery_image: {
     type: String,
     allowNull: false,
   },
