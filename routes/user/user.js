@@ -1,7 +1,7 @@
 const express = require("express");
 const { isLoggedIn } = require("../../middlewares");
 const multer = require('multer');
-const { modifyUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
+const { updateUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
 const router = express.Router();
 const upload = require("../../utils/uploadImage")
 
@@ -17,7 +17,7 @@ try {
 router.get('/:user_id', isLoggedIn, getUserInfo);
 
 //PATCH /user/nick
-router.patch('/nick', isLoggedIn, modifyUserNick);
+router.patch('/nick', isLoggedIn, updateUserNick);
 
 //POST /user/profile-image
 router.post('/profile-image', isLoggedIn, upload.single('img'), setUserProfileImage)

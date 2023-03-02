@@ -1,6 +1,6 @@
 const express = require("express");
 const { isLoggedIn } = require("../../middlewares");
-const { getCart, makeCart, modifyCart, deleteCart } = require("../../controllers/user/cart")
+const { getCart, makeCart, updateCart, deleteCart } = require("../../controllers/user/cart")
 const router = express.Router();
 /*
 GET /cart/:user_id
@@ -28,7 +28,7 @@ PATCH /cart
   product_count: ~~~
 }
 */
-router.patch('/', isLoggedIn, modifyCart);
+router.patch('/', isLoggedIn, updateCart);
 
 /*
 DELETE /cart

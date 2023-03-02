@@ -43,7 +43,7 @@ exports.makeCart = async (req, res, next) => {
 };
 
 //수량을 수정하는 경우밖에 없으므로
-exports.modifyCart = async (req, res, next) => {
+exports.updateCart = async (req, res, next) => {
   const { cart_id, product_count } = req.body;
   try {
     const cart = await Cart.findByIdAndUpdate(cart_id, {
