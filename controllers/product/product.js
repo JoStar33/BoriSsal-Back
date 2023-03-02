@@ -1,5 +1,5 @@
 const Product = require("../../schemas/product/product");
-const User = require("../../schemas/user/user")
+const User = require("../../schemas/user/user");
 
 exports.getProduct = async (req, res, next) => {
   try {
