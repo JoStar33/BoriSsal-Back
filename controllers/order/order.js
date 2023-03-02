@@ -1,4 +1,5 @@
 const Order = require("../../schemas/order/order");
+//상세주문 정보는 배열의 형태로 관리한다.
 //const OrderDetail = require("../schemas/order/orderDetail");
 
 exports.getOrder = async (req, res, next) => {
