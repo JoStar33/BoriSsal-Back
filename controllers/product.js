@@ -1,4 +1,5 @@
 const Product = require("../schemas/product/product");
+const User = require("../schemas/user/user")
 
 exports.getProduct = async (req, res, next) => {
   try {
@@ -29,7 +30,7 @@ exports.makeProduct = async (req, res, next) => {
     });
     if(exProduct.length >= 1) {
       return res.status(400).json("이미 존재하는 상품입니다. 다시 등록해주세요.");
-    }
+    };
     const newProduct = await Product.create(
       {
         category_id: req.body.category_id,
@@ -44,9 +45,36 @@ exports.makeProduct = async (req, res, next) => {
     return res.status(200).json({
       message: "제품등록이 완료됐습니다.",
       newProduct
-    })
+    });
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  };
+};
+
+//좋아요를 사용자가 눌렀을 경우.
+/*
+{
+  product_id: ~~~,
+  user_id: ~~~
+}
+*/
+exports.likeProduct = async (req, res, next) => {
+  try {
+    const product = await Product.findByIdAndUpdate(
+      res.body.product_id, {
+        product_like: { $inc: 1 }
+      }
+    );
+    const user = await User.findByIdAndUpdate(
+      res.body.user_id, {
+        $push: { user_like: res.body.product_id }
+      }
+    );
   } catch(error) {
     console.error(error);
     return next(error);
   }
-}
+};
+
+exports.product
