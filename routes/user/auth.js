@@ -1,7 +1,7 @@
 const express = require("express");
 const passport = require("passport");
-const { isLoggedIn, isNotLoggedIn } = require("./middlewares");
-const { join, login, logout, kakaoLogin, googleLogin } = require('../controllers/auth');
+const { isLoggedIn, isNotLoggedIn } = require("../../middlewares");
+const { join, login, logout, kakaoLogin, googleLogin } = require('../../controllers/user/auth');
 const router = express.Router();
 
 // POST /auth/join
