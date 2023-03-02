@@ -20,6 +20,9 @@ const userSchema = new Schema({
     allowNull: false,
     default: 'local',
   },
+  profile_image: {
+    type: String
+  },
   /*
     관리자 >> 0
     일반유저 >> 1
