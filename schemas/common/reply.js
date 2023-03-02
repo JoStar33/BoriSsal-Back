@@ -12,14 +12,10 @@ const replySchema = new Schema({
     type: String,
     allowNull: false,
   },
-  //부모댓글
-  reply_origin_number: {
-    type: Number
-  },
-  //댓글순서
-  reply_order: {
-    type: Number,
-    allowNull: false,
+  //자식댓글
+  reply_child: {
+    type: Array,
+    default: []
   },
   created_at: {
     type: Date,
