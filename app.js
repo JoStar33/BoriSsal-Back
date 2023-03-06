@@ -9,7 +9,20 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 
 dotenv.config();
-const authRouter = require('./routes/auth');
+//user
+const authRouter = require('./routes/user/auth');
+const cartRouter = require('./routes/user/cart');
+const deliverAddressRouter = require('./routes/user/deliverAddress');
+const userRouter = require('./routes/user/user');
+//product
+const productRouter = require('./routes/product/product');
+const productCategoryRouter = require('./routes/product/productCategory');
+const productReplyRouter = require('./routes/product/productReply');
+//order
+const orderRouter = require('./routes/order/order');
+//bori_gallery
+const boriGalleryRouter = require('./routes/bori_gallery/boriGallery');
+const boriGalleryReplyRouter = require('./routes/bori_gallery/boriGalleryReply');
 const passportConfig = require('./passport');
 
 const app = express();
@@ -38,8 +51,21 @@ app.use(session({
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());
-
+//user
 app.use('/auth', authRouter);
+app.use('/cart', cartRouter);
+app.use('/deliver-address', deliverAddressRouter);
+app.use('/user', userRouter);
+//product
+app.use('/product', productRouter);
+app.use('/product-category', productCategoryRouter);
+app.use('/product-reply', productReplyRouter);
+//order
+app.use('/order', orderRouter);
+//bori_gallery
+app.use('/bori-gallery', boriGalleryRouter);
+app.use('/bori-gallery-reply', boriGalleryReplyRouter);
+
 
 app.use((req, res, next) => {
   const error =  new Error(`${req.method} ${req.url} 라우터가 없습니다.`);
