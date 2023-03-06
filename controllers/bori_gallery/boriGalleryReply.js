@@ -38,7 +38,7 @@ exports.makeBoriGalleryReply = async (req, res, next) => {
     content: ~~~
   }
 */
-exports.makeProductChildReply = async (req, res, next) => {
+exports.makeBoriGalleryChildReply = async (req, res, next) => {
   try {
     await BoriGalleryReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
@@ -81,7 +81,7 @@ exports.updateBoriGalleryReply = async (req, res, next) => {
     content: ~~~
   }
 */
-exports.updateProductChildReply = async (req, res, next) => {
+exports.updateBoriGalleryChildReply = async (req, res, next) => {
   try {
     await BoriGalleryReply.updateOne({ _id: req.body.reply_id, "reply_child._id": req.body.child_reply_id}, {
       $set: { "reply_child.$.content": req.body.content }
@@ -116,7 +116,7 @@ exports.deleteBoriGalleryReply = async (req, res, next) => {
     child_reply_id: ~~~
   }
 */
-exports.deleteProductChildReply = async (req, res, next) => {
+exports.deleteBoriGalleryChildReply = async (req, res, next) => {
   try {
     await BoriGalleryReply.findByIdAndUpdate(req.body.reply_id, {
       $pull: { user_like: req.body.child_reply_id }
