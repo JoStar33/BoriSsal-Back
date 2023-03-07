@@ -48,7 +48,7 @@ exports.login = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      return res.json({
+      return res.status(200).json({
         id: user._id,
         email: user.email,
         nick: user.nick,
@@ -56,6 +56,15 @@ exports.login = (req, res, next) => {
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
 };
+
+exports.isLogIn = (req, res, next) => {
+  try {
+    return res.status(200).send("로그인 상태입니다.");
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+}
 
 exports.kakaoLogin = (req, res, next) => {
   passport.authenticate('kakao', (authError, user, info) => {
@@ -74,12 +83,7 @@ exports.kakaoLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      res.json({
-        id: user._id,
-        email: user.email,
-        nick: user.nick,
-      });
-      res.redirect('http://');
+      res.redirect(`${process.env.REDIRECT_URL}/oauth?email=${user.email}&nick=${user.nick}`);
     });
   })(req, res, next);
 }
@@ -101,12 +105,12 @@ exports.googleLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      res.json({
+      res.status(200).json({
         id: user._id,
         email: user.email,
         nick: user.nick,
       });
-      res.redirect('http://');
+      res.redirect(`${process.env.REDIRECT_URL}/oauth?email=${user.email}&nick=${user.nick}`);
     });
   })(req, res, next);
 }
