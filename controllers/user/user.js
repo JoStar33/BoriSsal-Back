@@ -2,7 +2,7 @@ const User = require("../../schemas/user/user");
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    const user = User.findById(req.params.user_id).select('email sns_id nick profile_image created_at');
+    const user = User.findById(req.params.user_id).select('_id email sns_id nick profile_image created_at user_product_like user_bori_gallery_like');
     res.status(200).json(user);
   } catch(error) {
     console.error(error);
