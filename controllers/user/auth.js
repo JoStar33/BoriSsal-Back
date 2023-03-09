@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require("../schemas/user");
-const DeliverAddress = require("../../schemas/user/deliverAddress")
+const DeliverAddress = require("../../schemas/user/deliverAddress");
 
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
@@ -20,6 +20,7 @@ exports.join = async (req, res, next) => {
     }).then(() => {
       DeliverAddress.create({
         user_id: user.user_id,
+        phone_number: "",
         address: "",
         address_detail: ""
       });
@@ -49,9 +50,15 @@ exports.login = (req, res, next) => {
         return next(loginError);
       }
       return res.status(200).json({
-        id: user._id,
+        _id: user._id,
         email: user.email,
         nick: user.nick,
+        provider: user.profile_image,
+        user_role: user.user_role,
+        sns_id: user.sns_id,
+        created_at: user.created_at,
+        user_product_like: user.user_product_like,
+        user_product_like: user.user_bori_gallery_like,
       });
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
@@ -83,7 +90,7 @@ exports.kakaoLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      res.redirect(`${process.env.REDIRECT_URL}/oauth?email=${user.email}&nick=${user.nick}`);
+      res.redirect(`${process.env.REDIRECT_URL}/oauth?user_id=${user._id}`);
     });
   })(req, res, next);
 }
@@ -105,12 +112,7 @@ exports.googleLogin = (req, res, next) => {
         console.error(loginError);
         return next(loginError);
       }
-      res.status(200).json({
-        id: user._id,
-        email: user.email,
-        nick: user.nick,
-      });
-      res.redirect(`${process.env.REDIRECT_URL}/oauth?email=${user.email}&nick=${user.nick}`);
+      res.redirect(`${process.env.REDIRECT_URL}/oauth?user_id=${user._id}`);
     });
   })(req, res, next);
 }

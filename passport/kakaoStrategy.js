@@ -1,6 +1,6 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
-
+const DeliverAddress = require("../../schemas/user/deliverAddress");
 const User = require('../schemas/user');
 
 module.exports = () => {
@@ -21,7 +21,14 @@ module.exports = () => {
           nick: profile.displayName,
           sns_id: profile.id,
           provider: 'kakao',
-        });
+        }).then(() => {
+          DeliverAddress.create({
+            user_id: newUser._id,
+            phone_number: "",
+            address: "",
+            address_detail: ""
+          });
+        });;
         done(null, newUser);
       }
     } catch (error) {
