@@ -1,9 +1,10 @@
 const express = require("express");
 const { isLoggedIn } = require("../../middlewares");
-const multer = require('multer');
-const { updateUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
+//const multer = require('multer');
+const { modifyUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
 const router = express.Router();
-const upload = require("../../utils/uploadImage")
+const upload = require("../../utils/uploadImage");
+const fs = require('fs');
 
 try {
   fs.readdirSync('uploads');
@@ -17,9 +18,9 @@ try {
 router.get('/:user_id', isLoggedIn, getUserInfo);
 
 //PATCH /user/nick
-router.patch('/nick', isLoggedIn, updateUserNick);
+router.patch('/nick', isLoggedIn, modifyUserNick);
 
 //POST /user/profile-image
-router.post('/profile-image', isLoggedIn, upload.single('img'), setUserProfileImage)
+router.post('/profile-image/:user_id', isLoggedIn, upload.single('img'), setUserProfileImage)
 
 module.exports = router;

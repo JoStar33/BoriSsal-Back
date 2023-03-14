@@ -1,7 +1,7 @@
 const passport = require('passport');
 const KakaoStrategy = require('passport-kakao').Strategy;
-const DeliverAddress = require("../../schemas/user/deliverAddress");
-const User = require('../schemas/user');
+const DeliverAddress = require("../schemas/user/deliverAddress");
+const User = require('../schemas/user/user');
 
 module.exports = () => {
   passport.use(new KakaoStrategy({

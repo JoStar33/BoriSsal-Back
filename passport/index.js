@@ -2,7 +2,7 @@ const passport = require("passport");
 const local = require("./localStrategy");
 const kakao = require("./kakaoStrategy");
 const google = require("./googleStrategy");
-const User = require("../schemas/user");
+const User = require("../schemas/user/user");
 
 module.exports = () => {
   passport.serializeUser((user, done) => {

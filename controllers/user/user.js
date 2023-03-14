@@ -27,7 +27,7 @@ exports.setUserProfileImage = async (req, res, next) => {
     await User.findByIdAndUpdate(req.params.user_id, {
       profile_image: `/img/${req.file.filename}`,
     });
-    res.status.json(`/img/${req.file.filename}`);
+    res.status(200).json(`/img/${req.file.filename}`);
   } catch(error) {
     console.error(error);
     return next(error);

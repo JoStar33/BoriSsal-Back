@@ -1,7 +1,6 @@
-const { Types: { ObjectId } } = Schema;
 const mongoose = require('mongoose');
-
 const { Schema } = mongoose;
+const { Types: { ObjectId } } = Schema;
 
 const orderSchema = new Schema({
   user_id: {

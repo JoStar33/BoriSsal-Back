@@ -1,4 +1,4 @@
-const BoriGalleryReply = require("../../schemas/boriGallery/boriGalleryReply")
+const BoriGalleryReply = require("../../schemas/bori_gallery/boriGalleryReply");
 
 //보리갤러리에 대한 모든 댓글정보를 가지고 온다.
 exports.getBoriGalleryReply = async (req, res, next) => {

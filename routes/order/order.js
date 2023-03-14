@@ -1,5 +1,5 @@
 const express = require("express");
-const { getOrder, getOrderById, deleteOrder, makeOrder } = require("../../controllers/order/order")
+const { getOrder, getOrderById, deleteOrder, makeOrder } = require("../../controllers/order/order");
 const router = express.Router();
 
 //GET /order/:user_id
@@ -22,7 +22,7 @@ POST /order
     ],
   ]
 */
-router.post('/', makeOrder);
+//router.post('/', makeOrder);
 
 /*
 PATCH /product-category
@@ -31,7 +31,7 @@ PATCH /product-category
     category_name: ~~~
   }
 */
-router.patch('/', updateCategory);
+//router.patch('/', updateCategory);
 
 /*
 DELETE /product-category
@@ -39,7 +39,7 @@ DELETE /product-category
     category_id: ~~~
   }
 */
-router.delete('/', deleteCategory);
+//router.delete('/', deleteCategory);
 
 
 module.exports = router;

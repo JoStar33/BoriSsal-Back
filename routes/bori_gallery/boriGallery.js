@@ -59,7 +59,7 @@ PATCH /bori-gallery/like
   user_id: ~~~
 }
 */
-router.patch('/like', isLoggedIn, likeProduct);
+router.patch('/like', isLoggedIn, likeBoriGallery);
 
 /*
 PATCH /bori-gallery/dislike
@@ -68,6 +68,6 @@ PATCH /bori-gallery/dislike
   user_id: ~~~
 }
 */
-router.patch('/dislike', isLoggedIn, dislikeProduct);
+router.patch('/dislike', isLoggedIn, dislikeBoriGallery);
 
 module.exports = router;

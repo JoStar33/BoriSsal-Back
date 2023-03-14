@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const { Types: { ObjectId } } = Schema;
 const { Schema } = mongoose;
+const { Types: { ObjectId } } = Schema;
 
 const deliverAddressSchema = new Schema({
   user_id: {
@@ -10,15 +10,12 @@ const deliverAddressSchema = new Schema({
   },
   phone_number: {
     type: String,
-    required: true
   },
   address: {
     type: String,
-    required: true
   },
   address_detail: {
     type: String,
-    required: true
   }
 });
 

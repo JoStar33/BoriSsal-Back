@@ -1,13 +1,14 @@
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const User = require("../schemas/user");
+const User = require("../../schemas/user/user");
 const DeliverAddress = require("../../schemas/user/deliverAddress");
 
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
   try {
     const exUser = await User.find({ email: email });
-    if (exUser !== []) {
+    console.log(exUser);
+    if (exUser === []) {
       return res
         .status(400)
         .json({ message: "해당 이메일은 이미 존재합니다." });
@@ -17,13 +18,12 @@ exports.join = async (req, res, next) => {
       email,
       nick,
       password: hash,
-    }).then(() => {
-      DeliverAddress.create({
-        user_id: user.user_id,
-        phone_number: "",
-        address: "",
-        address_detail: ""
-      });
+    });
+    await DeliverAddress.create({
+      user_id: user._id,
+      phone_number: "",
+      address: "",
+      address_detail: ""
     });
     return res.status(200).send('회원가입이 정상적으로 이루어졌습니다.');
   } catch (error) {
@@ -53,7 +53,8 @@ exports.login = (req, res, next) => {
         _id: user._id,
         email: user.email,
         nick: user.nick,
-        provider: user.profile_image,
+        provider: user.provider,
+        profile_image: user.profile_image,
         user_role: user.user_role,
         sns_id: user.sns_id,
         created_at: user.created_at,
@@ -67,6 +68,15 @@ exports.login = (req, res, next) => {
 exports.isLogIn = (req, res, next) => {
   try {
     return res.status(200).send("로그인 상태입니다.");
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+}
+
+exports.isNotLogIn = (req, res, next) => {
+  try {
+    return res.status(200).send("로그인하지 않은 상태입니다.");
   } catch (error) {
     console.error(error);
     return next(error);
