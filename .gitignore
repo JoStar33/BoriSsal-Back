@@ -2,6 +2,8 @@
 
 /config/config.json
 
+/uploads
+
 .env
 
 /package-lock.json
