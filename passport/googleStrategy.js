@@ -1,5 +1,6 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const DeliverAddress = require("../schemas/user/deliverAddress");
 const User = require('../schemas/user/user');
 
 module.exports = () => {
@@ -20,6 +21,12 @@ module.exports = () => {
           nick: profile.displayName,
           sns_id: profile.id,
           provider: 'google',
+        });
+        await DeliverAddress.create({
+          user_id: newUser._id,
+          phone_number: "",
+          address: "",
+          address_detail: ""
         });
         done(null, newUser);
       }

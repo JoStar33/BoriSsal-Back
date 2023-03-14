@@ -21,14 +21,13 @@ module.exports = () => {
           nick: profile.displayName,
           sns_id: profile.id,
           provider: 'kakao',
-        }).then(() => {
-          DeliverAddress.create({
-            user_id: newUser._id,
-            phone_number: "",
-            address: "",
-            address_detail: ""
-          });
-        });;
+        });
+        await DeliverAddress.create({
+          user_id: newUser._id,
+          phone_number: "",
+          address: "",
+          address_detail: ""
+        });
         done(null, newUser);
       }
     } catch (error) {
