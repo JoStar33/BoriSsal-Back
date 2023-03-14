@@ -5,7 +5,7 @@ const connect = () => {
     mongoose.set('debug', true);
   }
   mongoose.connect(process.env.MONGODB_CONNECT_KEY, {
-    dbName: 'nodejs',
+    dbName: 'bori_ssal',
     useNewUrlParser: true,
   }, (error) => {
     if (error) {

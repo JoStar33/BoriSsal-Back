@@ -5,6 +5,7 @@ const path = require('path');
 const connect = require('./schemas');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+
 const dotenv = require('dotenv');
 const passport = require('passport');
 
@@ -31,19 +32,21 @@ app.set('port', process.env.PORT || 3030);
 connect();
 
 app.use(morgan('dev'));
-app.use(express.static(path.join(__dirname, 'public')));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:5173'], // 출처 허용 옵션
+  origin: ['http://localhost:3000', 'http://127.0.0.1:5173'],
+  credentials: true,  // 출처 허용 옵션
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
+const days = 1;
 app.use(session({
   secret: process.env.COOKIE_SECRET || config.sessionSecretKey,
   resave: false,
   saveUninitialized: false,
   cookie: {
+    //expires: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
     httpOnly: true,
     secure: false,
   },
