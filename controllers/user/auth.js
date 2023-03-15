@@ -6,11 +6,17 @@ const DeliverAddress = require("../../schemas/user/deliverAddress");
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
   try {
-    const exUser = await User.find({ email: email });
-    if (exUser.length !== 0) {
+    const exUser = await User.findOne({ email: email });
+    if (exUser) {
       return res
         .status(400)
         .json({ message: "해당 이메일은 이미 존재합니다." });
+    }
+    const exNickUser = await User.findOne({ nick: nick });
+    if (exNickUser) {
+      return res
+        .status(400)
+        .json({ message: "해당 닉네임은 이미 존재합니다." });
     }
     const hash = await bcrypt.hash(password, 12);
     const user = await User.create({
