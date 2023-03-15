@@ -68,7 +68,7 @@ exports.updateBoriGalleryImage = async (req, res, next) => {
 exports.deleteBoriGallery = async (req, res, next) => {
   try {  
     await BoriGallery.remove({_id: req.body.bori_gallery_id});
-    return res.status(200).send("정상적으로 삭제했습니다!");
+    return res.status(200).json({message: "정상적으로 삭제했습니다!"});
   } catch(error) {
     console.error(error);
     return next(error);

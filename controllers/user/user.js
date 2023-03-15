@@ -15,7 +15,9 @@ exports.modifyUserNick = async (req, res, next) => {
     await User.findByIdAndUpdate(req.params.user_id, {
       nick: req.body.nick,
     });
-    return res.status(200).send("유저 닉네임 업데이트 완료");
+    return res.status(200).json({
+      message: "유저 닉네임 업데이트 완료"
+    });
   } catch(error) {
     console.error(error);
     return next(error);

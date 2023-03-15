@@ -29,7 +29,7 @@ exports.makeProduct = async (req, res, next) => {
       product_name: req.body.product.product_name
     });
     if(exProduct.length >= 1) {
-      return res.status(400).json("이미 존재하는 상품입니다. 다시 등록해주세요.");
+      return res.status(400).json({message: "이미 존재하는 상품입니다. 다시 등록해주세요."});
     };
     const newProduct = await Product.create(
       {

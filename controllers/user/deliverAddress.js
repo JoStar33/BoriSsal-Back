@@ -26,7 +26,9 @@ exports.updateDeliverAddress = async (req, res, next) => {
       });
     }
     if(!deliverAddress) {
-      return res.status(500).json('잘못된 정보를 전달했습니다. 다시 확인해주세요.');
+      return res.status(500).json({
+        message: '잘못된 정보를 전달했습니다. 다시 확인해주세요.',
+      });
     }
     return res.status(200).json(deliverAddress);
   } catch(error) {

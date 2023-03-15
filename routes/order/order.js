@@ -22,24 +22,16 @@ POST /order
     ],
   ]
 */
-//router.post('/', makeOrder);
+router.post('/', makeOrder);
 
 /*
-PATCH /product-category
-  {
-    category_id: ~~~,
-    category_name: ~~~
-  }
+POST /order
+  [
+    user_id: ~,
+    order_id: ~
+  ]
 */
-//router.patch('/', updateCategory);
-
-/*
-DELETE /product-category
-  {
-    category_id: ~~~
-  }
-*/
-//router.delete('/', deleteCategory);
+router.delete('/', deleteOrder);
 
 
 module.exports = router;

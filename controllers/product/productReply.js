@@ -48,7 +48,9 @@ exports.makeProductChildReply = async (req, res, next) => {
         created_at: new Date.now
       }
     });
-    return res.status(200).json("대댓글 등록 완료.");
+    return res.status(200).json({
+      message: "대댓글 등록 완료."
+    });
   } catch(error) {
     console.error(error);
     return next(error);
@@ -87,7 +89,7 @@ exports.updateProductChildReply = async (req, res, next) => {
     await ProductReply.updateOne({ _id: req.body.reply_id, "reply_child._id": req.body.child_reply_id}, {
       $set: { "reply_child.$.content": req.body.content }
     });
-    return res.status(200).json("댓글 업데이트 완료.");
+    return res.status(200).json({message: "댓글 업데이트 완료."});
   } catch(error) {
     console.error(error);
     return next(error);
@@ -122,7 +124,9 @@ exports.deleteProductChildReply = async (req, res, next) => {
     await ProductReply.findByIdAndUpdate(req.body.reply_id, {
       $pull: { user_like: req.body.child_reply_id }
     });
-    return res.status(200).json("대댓글 삭제 완료.");
+    return res.status(200).json({
+      message: "대댓글 삭제 완료."
+    });
   } catch(error) {
     console.error(error);
     return next(error);

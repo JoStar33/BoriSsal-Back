@@ -33,7 +33,7 @@ exports.deleteOrder = async (req, res, next) => {
     const order = await Order.remove({
       _id: req.body.order_id
     });
-    return res.status(200).json(`정상적으로 삭제되었습니다. ${order}`);
+    return res.status(200).json({message: `정상적으로 삭제되었습니다. ${order._id}`});
   } catch(error) {
     console.error(error);
     return next(error);

@@ -39,7 +39,7 @@ exports.deleteCategory = async (req, res, next) => {
     await ProductCategory.remove({
       _id: req.body.category_id
     });
-    return res.status(200).send("카테고리 삭제 완료");
+    return res.status(200).json({message: "카테고리 삭제 완료"});
   } catch(error) {
     console.error(error);
     return next(error);

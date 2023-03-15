@@ -35,7 +35,9 @@ exports.makeCart = async (req, res, next) => {
         product_count: product.product_count
       });
     });
-    return res.status(200).send("장바구니 등록 성공");
+    return res.status(200).json({
+      message: "장바구니 등록 성공",
+    });
   } catch(error) {
     console.error(error);
     return next(error);

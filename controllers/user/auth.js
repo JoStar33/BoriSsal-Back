@@ -25,7 +25,9 @@ exports.join = async (req, res, next) => {
       address: "",
       address_detail: ""
     });
-    return res.status(200).send('회원가입이 정상적으로 이루어졌습니다.');
+    return res.status(200).json({
+      message: '회원가입이 정상적으로 이루어졌습니다.',
+    });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -67,7 +69,9 @@ exports.login = (req, res, next) => {
 
 exports.isLogIn = (req, res, next) => {
   try {
-    return res.status(200).send("로그인 상태입니다.");
+    return res.status(200).json({
+      message: "로그인 상태입니다.",
+    });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -76,7 +80,9 @@ exports.isLogIn = (req, res, next) => {
 
 exports.isNotLogIn = (req, res, next) => {
   try {
-    return res.status(200).send("로그인하지 않은 상태입니다.");
+    return res.status(200).json({
+      message: "로그인하지 않은 상태입니다.",
+    });
   } catch (error) {
     console.error(error);
     return next(error);
@@ -128,7 +134,14 @@ exports.googleLogin = (req, res, next) => {
 }
 
 exports.logout = (req, res) => {
-  req.logout(() => {
-    res.status(200).send('로그아웃이 성공적으로 완료됐습니다.');
-  });
+  try {
+    req.logout();
+    return res.status(200).json({
+      message: "로그아웃이 성공적으로 완료됐습니다..",
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
 };
+
