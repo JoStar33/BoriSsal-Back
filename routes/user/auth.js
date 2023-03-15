@@ -1,10 +1,16 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("../../middlewares");
-const { join, login, logout, kakaoLogin, googleLogin, isLogIn, isNotLogIn } = require('../../controllers/user/auth');
+const { join, login, logout, nickDuplicate, emailDuplicate, kakaoLogin, googleLogin, isLogIn, isNotLogIn } = require('../../controllers/user/auth');
 const router = express.Router();
 
 // POST /auth/join
 router.post('/join', isNotLoggedIn, join);
+
+// POST /auth/join/nick
+router.post('/join/nick', nickDuplicate);
+
+// POST /auth/join/email
+router.post('/join/email', emailDuplicate);
 
 // POST /auth/login
 router.post('/login', isNotLoggedIn, login);

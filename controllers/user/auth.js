@@ -7,8 +7,7 @@ exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
   try {
     const exUser = await User.find({ email: email });
-    console.log(exUser);
-    if (exUser === []) {
+    if (exUser.length !== 0) {
       return res
         .status(400)
         .json({ message: "해당 이메일은 이미 존재합니다." });
@@ -33,6 +32,38 @@ exports.join = async (req, res, next) => {
     return next(error);
   }
 }
+
+exports.emailDuplicate = async (req, res, next) => {
+  const { email } = req.body;
+  try {
+    const exUser = await User.findOne({ email: email });
+    if (exUser) {
+      return res
+        .status(400)
+        .json({ message: "해당 이메일은 이미 존재합니다." });
+    }
+    return res.json({message: "ok"});
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+};
+
+exports.nickDuplicate = async (req, res, next) => {
+  const { nick } = req.body;
+  try {
+    const exUser = await User.findOne({ nick: nick });
+    if (exUser) {
+      return res
+        .status(400)
+        .json({ message: "해당 닉네임은 이미 존재합니다." });
+    }
+    return res.json({ message: 'ok' });
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+};
 
 exports.login = (req, res, next) => {
   passport.authenticate('local', (authError, user, info) => {
