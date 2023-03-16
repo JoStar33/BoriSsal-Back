@@ -3,7 +3,7 @@ const { isLoggedIn } = require("../../middlewares");
 //const multer = require('multer');
 const { modifyUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
 const router = express.Router();
-const upload = require("../../utils/uploadImage");
+const { upload } = require("../../utils/uploadImage");
 const fs = require('fs');
 
 try {
@@ -21,6 +21,6 @@ router.get('/:user_id', isLoggedIn, getUserInfo);
 router.patch('/nick', isLoggedIn, modifyUserNick);
 
 //POST /user/profile-image
-router.post('/profile-image/:user_id', isLoggedIn, upload.single('img'), setUserProfileImage)
+router.post('/profile-image/:user_id', isLoggedIn, upload.single('img'), setUserProfileImage);
 
 module.exports = router;

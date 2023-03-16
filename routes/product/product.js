@@ -2,7 +2,7 @@ const express = require("express");
 const { isLoggedIn } = require("../../middlewares");
 const { getProduct, getProductById, makeProduct, likeProduct, dislikeProduct } = require("../../controllers/product/product")
 const router = express.Router();
-const upload = require("../../utils/uploadImage")
+const { productUpload } = require("../../utils/uploadImage")
 
 //GET /product
 router.get('/', getProduct);
@@ -23,7 +23,7 @@ POST /product
   }
 }
 */
-router.post('/', isLoggedIn, upload.single('img'), makeProduct);
+router.post('/', isLoggedIn, productUpload.single('img'), makeProduct);
 
 /*
 PATCH /product/like
