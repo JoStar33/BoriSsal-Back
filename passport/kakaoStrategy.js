@@ -10,8 +10,18 @@ module.exports = () => {
   }, async (accessToken, refreshToken, profile, done) => {
     console.log('kakao profile', profile);
     try {
+      const localExUser = await User.findOne({
+        email: profile._json.kaccount_email,
+        $or: [
+          { provider: 'local' }, 
+          { provider: 'google' }
+        ]
+      });
+      if (localExUser) {
+        done("존재하는 유저 이메일");
+      }
       const exUser = await User.findOne({
-        where: { sns_id: profile.id, provider: 'kakao' },
+        sns_id: profile.id, provider: 'kakao'
       });
       if (exUser) {
         done(null, exUser);

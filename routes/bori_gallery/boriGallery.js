@@ -3,7 +3,7 @@ const { isLoggedIn } = require("../../middlewares");
 const { getBoriGallery, getBoriGalleryById, makeBoriGallery, updateBoriGallery,
   updateBoriGalleryImage, deleteBoriGallery, likeBoriGallery, dislikeBoriGallery } = require("../../controllers/bori_gallery/boriGallery")
 const router = express.Router();
-const upload = require("../../utils/uploadImage")
+const { upload } = require("../../utils/uploadImage")
 
 //GET /bori-gallery
 router.get('/', getBoriGallery);
