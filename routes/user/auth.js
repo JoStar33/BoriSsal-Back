@@ -1,6 +1,6 @@
 const express = require("express");
 const { isLoggedIn, isNotLoggedIn } = require("../../middlewares");
-const { join, login, logout, nickDuplicate, passwordChange, emailDuplicate, kakaoLogin, googleLogin, isLogIn, isNotLogIn } = require('../../controllers/user/auth');
+const { join, login, logout, nickDuplicate, findPassword, passwordChange, emailDuplicate, kakaoLogin, googleLogin, isLogIn, isNotLogIn } = require('../../controllers/user/auth');
 const router = express.Router();
 
 // POST /auth/join
@@ -14,6 +14,9 @@ router.post('/join/email', emailDuplicate);
 
 // POST /auth/password
 router.post('/password', passwordChange);
+
+// POST /auth/password
+router.post('/find/password', findPassword);
 
 // POST /auth/login
 router.post('/login', isNotLoggedIn, login);

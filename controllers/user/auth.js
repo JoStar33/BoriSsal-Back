@@ -2,6 +2,8 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const User = require("../../schemas/user/user");
 const DeliverAddress = require("../../schemas/user/deliverAddress");
+const { transporter } = require('../../utils/transporter');
+const { passwordGenerator } = require('../../utils/passwordGenerator');
 
 exports.join = async (req, res, next) => {
   const { email, nick, password } = req.body;
@@ -50,7 +52,8 @@ exports.passwordChange = async (req, res, next) => {
         .status(400)
         .json({ message: "잘못된 회원정보입니다." });
     }
-    if (hashPass !== user.password) {
+    const result = await bcrypt.compare(password, user.password);
+    if (!result) {
       return res
         .status(400)
         .json({ message: "현재 비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요." });
@@ -100,6 +103,43 @@ exports.nickDuplicate = async (req, res, next) => {
     console.error(error);
     return next(error);
   }
+};
+
+exports.findPassword = async (req, res, next) => {
+  const { email } = req.body;
+  const tempPassword = passwordGenerator();
+  try {
+    const hashTempPassword = await bcrypt.hash(tempPassword, 12);
+    const emailData = await User.findOne({email: email});
+    if (!emailData) {
+      return res.status(400).json({
+        message: "찾으시는 이메일이 존재하지 않습니다."
+      });
+    };
+    await User.findOneAndUpdate({email: email}, {
+      password: hashTempPassword
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  };
+  try {
+    await transporter.sendMail({
+      from: `Bori-Ssal ${process.env.GOOGLE_MAIL_ADDRESS}`,
+      to: email,
+      subject: "[보리쌀] 임시 비밀번호 안내",
+      html: `<b>임시 비밀번호는 ${tempPassword}입니다.</b>`,
+    });
+
+    return res.status(200).json({
+      isSuccess: true,
+      code: 200,
+      message: "등록된 이메일로 새로 발급된 패스워드가 전송되었습니다.",
+    });
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  };
 };
 
 exports.login = (req, res, next) => {
@@ -159,6 +199,9 @@ exports.isNotLogIn = (req, res, next) => {
 
 exports.kakaoLogin = (req, res, next) => {
   passport.authenticate('kakao', (authError, user, info) => {
+    if (authError === "존재하는 유저 이메일") {
+      return res.redirect(`${process.env.REDIRECT_URL}/same-email`);
+    }
     if (authError) {
       console.error(authError);
       return next(authError);
