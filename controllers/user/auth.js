@@ -39,6 +39,37 @@ exports.join = async (req, res, next) => {
   }
 }
 
+exports.passwordChange = async (req, res, next) => {
+  const { id, password, newPassword } = req.body;
+  try {
+    const user = await User.findById(id);
+    const hashPass = await bcrypt.hash(password, 12);
+    const hashNewPass = await bcrypt.hash(newPassword, 12);
+    if (!user) {
+      return res
+        .status(400)
+        .json({ message: "잘못된 회원정보입니다." });
+    }
+    if (hashPass !== user.password) {
+      return res
+        .status(400)
+        .json({ message: "현재 비밀번호를 잘못 입력하셨습니다. 다시 입력해주세요." });
+    }
+    if(password === newPassword) {
+      return res
+      .status(400)
+      .json({ message: "현재 비밀번호와 같은 비밀번호입니다. 다시 확인해주세요." });
+    } 
+    await User.findByIdAndUpdate(id, {
+      password: hashNewPass
+    });
+    return res.json({message: "ok"});
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  }
+};
+
 exports.emailDuplicate = async (req, res, next) => {
   const { email } = req.body;
   try {
