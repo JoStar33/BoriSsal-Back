@@ -199,9 +199,6 @@ exports.isNotLogIn = (req, res, next) => {
 
 exports.kakaoLogin = (req, res, next) => {
   passport.authenticate('kakao', (authError, user, info) => {
-    if (authError === "존재하는 유저 이메일") {
-      return res.redirect(`${process.env.REDIRECT_URL}/same-email`);
-    }
     if (authError) {
       console.error(authError);
       return next(authError);
@@ -214,8 +211,7 @@ exports.kakaoLogin = (req, res, next) => {
     }
     return req.login(user, (loginError) => {
       if (loginError) {
-        console.error(loginError);
-        return next(loginError);
+        return res.redirect(`${process.env.REDIRECT_URL}/same-email`);
       }
       res.redirect(`${process.env.REDIRECT_URL}/oauth?user_id=${user._id}`);
     });
@@ -236,8 +232,7 @@ exports.googleLogin = (req, res, next) => {
     }
     return req.login(user, (loginError) => {
       if (loginError) {
-        console.error(loginError);
-        return next(loginError);
+        return res.redirect(`${process.env.REDIRECT_URL}/same-email`);
       }
       res.redirect(`${process.env.REDIRECT_URL}/oauth?user_id=${user._id}`);
     });

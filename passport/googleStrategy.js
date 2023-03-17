@@ -1,5 +1,5 @@
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const DeliverAddress = require("../schemas/user/deliverAddress");
 const User = require('../schemas/user/user');
 
@@ -7,25 +7,32 @@ module.exports = () => {
   passport.use(new GoogleStrategy({
     clientID: process.env.GOOGLE_ID,
     clientSecret: process.env.GOOGLE_SECRET,
-    callbackURL: 'auth/google'
+    callbackURL: 'http://localhost:3030/auth/google',
+    scope: ['profile', 'email']
   }, async (accessToken, refreshToken, profile, done) => {
     try {
+      console.log(profile);
       const localExUser = await User.findOne({
-        email: profile._json.kaccount_email,
         $or: [
-          {provider: 'local'}, 
-          {provider: 'kakao'}
+          { $and: [
+            { email: profile.emails[0].value }, 
+            { provider: 'kakao' }
+          ]},
+          { $and: [
+            { email: profile.emails[0].value }, 
+            { provider: 'local' }
+          ]}
         ]
       });
       if (localExUser) {
-        done("존재하는 유저 이메일");
+        done(null, true, { message : '존재하는 유저 이메일' });
       }
-      const exUser = await User.findOne({
-        where: { sns_id: profile.id, provider: 'google' },
-      });
+      const exUser = await User.findOne({ sns_id: profile.id, provider: 'google' });
       if (exUser) {
+        console.log(exUser);
         done(null, exUser);
       } else {
+        console.log(exUser);
         const newUser = await User.create({
           email: profile.emails[0].value,
           nick: profile.displayName,
