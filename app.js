@@ -33,6 +33,7 @@ connect();
 
 app.use(morgan('dev'));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
+app.use('/product_images', express.static(path.join(__dirname, 'product_images')));
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
 app.use(cors({

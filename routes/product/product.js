@@ -23,7 +23,7 @@ POST /product
   }
 }
 */
-router.post('/', isLoggedIn, productUpload.single('img'), makeProduct);
+router.post('/', isLoggedIn, productUpload.single('product_images'), makeProduct);
 
 /*
 PATCH /product/like

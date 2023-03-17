@@ -3,7 +3,7 @@ const User = require("../../schemas/user/user");
 
 exports.getProduct = async (req, res, next) => {
   try {
-    const product = await Product.find({}); 
+    const product = await Product.find(); 
     return res.status(200).json(product);
   } catch(error) {
     console.error(error);
