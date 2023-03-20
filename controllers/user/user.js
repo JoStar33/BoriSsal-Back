@@ -13,7 +13,7 @@ exports.getUserInfo = async (req, res, next) => {
       sns_id: user.sns_id,
       created_at: user.created_at,
       user_product_like: user.user_product_like,
-      user_product_like: user.user_bori_gallery_like,
+      user_bori_gallery_like: user.user_bori_gallery_like,
     });
   } catch(error) {
     console.error(error);
