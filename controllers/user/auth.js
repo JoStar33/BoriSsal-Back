@@ -169,7 +169,7 @@ exports.login = (req, res, next) => {
         sns_id: user.sns_id,
         created_at: user.created_at,
         user_product_like: user.user_product_like,
-        user_product_like: user.user_bori_gallery_like,
+        user_bori_gallery_like: user.user_bori_gallery_like,
       });
     });
   })(req, res, next); // 미들웨어 내의 미들웨어에는 (req, res, next)를 붙입니다.
