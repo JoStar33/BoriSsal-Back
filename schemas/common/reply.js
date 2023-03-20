@@ -8,6 +8,10 @@ const replySchema = new Schema({
     required: true,
     ref: 'User',
   },
+  email: {
+    type: String,
+    allowNull: false,
+  },
   content: {
     type: String,
     allowNull: false,
@@ -19,7 +23,7 @@ const replySchema = new Schema({
   },
   created_at: {
     type: Date,
-    default: Date.NOW,
+    default: Date.now,
   },
 });
 
