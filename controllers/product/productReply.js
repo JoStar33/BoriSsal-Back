@@ -5,7 +5,7 @@ exports.getProductReply = async (req, res, next) => {
   try {
     const productReply = await ProductReply.find({
       product_id: req.params.product_id
-    });
+    }).sort({_id: -1});
     return res.status(200).json(productReply);
   } catch(error) {
     console.error(error);
@@ -20,6 +20,7 @@ exports.makeProductReply = async (req, res, next) => {
   try {
     const productReply = await ProductReply.create({
       user_id: req.body.user_id,
+      email: req.body.email,
       product_id: req.body.product_id,
       content: req.body.content,
       reply_child: []
@@ -44,6 +45,7 @@ exports.makeProductChildReply = async (req, res, next) => {
     await ProductReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         user_id: req.body.user_id,
+        email: req.body.email,
         content: req.body.content,
         created_at: new Date.now
       }
