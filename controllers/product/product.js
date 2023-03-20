@@ -61,9 +61,12 @@ exports.makeProduct = async (req, res, next) => {
 */
 exports.likeProduct = async (req, res, next) => {
   try {
+    console.log(req.body);
     await Product.findByIdAndUpdate(
       req.body.product_id, {
-        product_like: { $inc: 1 }
+        $inc: {
+          product_like: 1
+        }
       }
     );
     const user = await User.findByIdAndUpdate(
@@ -84,7 +87,9 @@ exports.dislikeProduct = async (req, res, next) => {
   try {
     await Product.findByIdAndUpdate(
       req.body.product_id, {
-        product_like: { $inc: -1 }
+        $inc: {
+          product_like: -1
+        }
       }
     );
     const user = await User.findByIdAndUpdate(
