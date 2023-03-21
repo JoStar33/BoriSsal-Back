@@ -41,11 +41,11 @@ const userSchema = new Schema({
   },
   /*
     {
-      product_id: ~~~,
-      product_name: ~~~,
+      bori_goods_id: ~~~,
+      bori_goods_name: ~~~,
     }
   */
-  user_product_like: {
+  user_bori_goods_like: {
     type: Array,
     default: []
   },

@@ -13,11 +13,11 @@ router.get('/order-detail/:order_id', getOrderById);
 POST /order
   [
     user_id: ~,
-    products: [
+    boriGoodss: [
       {
-        product_id: ~,
-        product_stock: ~,
-        product_price: ~
+        bori_goods_id: ~,
+        bori_goods_stock: ~,
+        bori_goods_price: ~
       }
     ],
   ]

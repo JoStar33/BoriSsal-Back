@@ -1,5 +1,5 @@
 const Cart = require("../../schemas/user/cart");
-const Product = require("../../schemas/product/product");
+const BoriGoods = require("../../schemas/bori_goods/boriGoods");
 
 //모든 장바구니 정보 조회.
 //상세 장바구니 조회는 기능이 필요없다고 판단함.
@@ -20,16 +20,16 @@ exports.getCart = async (req, res, next) => {
 서버에 부담을 안줄 수 있는 방법을 찾다가 클라이언트에서 모든 정보를 보내도록 수정.
 {
   user_id: ~~,
-  product_id: ~~~,
-  product_stock: ~~~
+  bori_goods_id: ~~~,
+  bori_goods_stock: ~~~
 }
 */
 exports.makeCart = async (req, res, next) => {
-  const { user_id, product_id, product_name, product_image, product_price } = req.body;
+  const { user_id, bori_goods_id, bori_goods_name, bori_goods_image, bori_goods_price } = req.body;
   try {
     const exCart = await Cart.findOne({
       user_id: user_id,
-      product_id: product_id
+      bori_goods_id: bori_goods_id
     })
     if (exCart) {
       return res
@@ -38,11 +38,11 @@ exports.makeCart = async (req, res, next) => {
     }
     await Cart.create({
       user_id: user_id,
-      product_id: product_id,
-      product_stock: 1,
-      product_name: product_name,
-      product_image: product_image,
-      product_price: product_price
+      bori_goods_id: bori_goods_id,
+      bori_goods_stock: 1,
+      bori_goods_name: bori_goods_name,
+      bori_goods_image: bori_goods_image,
+      bori_goods_price: bori_goods_price
     });
     return res.status(200).json({
       message: "장바구니 등록 성공",
@@ -55,10 +55,10 @@ exports.makeCart = async (req, res, next) => {
 
 //수량을 수정하는 경우밖에 없으므로
 exports.updateCart = async (req, res, next) => {
-  const { cart_id, product_stock } = req.body;
+  const { cart_id, bori_goods_stock } = req.body;
   try {
     const cart = await Cart.findByIdAndUpdate(cart_id, {
-      product_stock: product_stock
+      bori_goods_stock: bori_goods_stock
     });
     return res.status(200).json(cart);
   } catch(error) {

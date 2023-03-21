@@ -1,9 +1,9 @@
-const ProductCategory = require("../../schemas/product/productCategory")
+const BoriGoodsCategory = require("../../schemas/bori_goods/boriGoodsCategory")
 
 exports.getCategory = async (req, res, next) => {
   try {
-    const productCategory = await ProductCategory.find({});
-    return res.status(200).json(productCategory);
+    const boriGoodsCategory = await BoriGoodsCategory.find({});
+    return res.status(200).json(boriGoodsCategory);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -12,10 +12,10 @@ exports.getCategory = async (req, res, next) => {
 
 exports.makeCategory = async (req, res, next) => {
   try {
-    const productCategory = await ProductCategory.create({
+    const boriGoodsCategory = await BoriGoodsCategory.create({
       category_name: req.body.category_name
     });
-    return res.status(200).json(productCategory);
+    return res.status(200).json(boriGoodsCategory);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -23,11 +23,12 @@ exports.makeCategory = async (req, res, next) => {
 };
 
 exports.updateCategory = async (req, res, next) => {
+  const {category_id, category_name} = req.body;
   try {
-    const productCategory = await ProductCategory.findByIdAndUpdate(req.body.category_id, {
-      category_name: req.body.category_name
+    const boriGoodsCategory = await BoriGoodsCategory.findByIdAndUpdate(category_id, {
+      category_name: category_name
     });
-    return res.status(200).json(productCategory);
+    return res.status(200).json(boriGoodsCategory);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -36,7 +37,7 @@ exports.updateCategory = async (req, res, next) => {
 
 exports.deleteCategory = async (req, res, next) => {
   try {
-    await ProductCategory.remove({
+    await BoriGoodsCategory.remove({
       _id: req.body.category_id
     });
     return res.status(200).json({message: "카테고리 삭제 완료"});

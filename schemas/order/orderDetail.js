@@ -5,24 +5,24 @@ const { Schema } = mongoose;
 const { Types: { ObjectId } } = Schema;
 
 const orderDetailSchema = new Schema({
-  product_id: {
+  bori_goods_id: {
     type: ObjectId,
     required: true,
-    ref: "Product",
+    ref: "BoriGoods",
   },
-  product_name: {
+  bori_goods_name: {
     type: String,
     required: true,
   },
-  product_image: {
+  bori_goods_image: {
     type: String,
     required: true,
   },
-  product_stock: {
+  bori_goods_stock: {
     type: Number,
     required: true
   },
-  product_price: {
+  bori_goods_price: {
     type: Number,
     required: true
   },

@@ -2,7 +2,7 @@ const User = require("../../schemas/user/user");
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.user_id).select('_id email sns_id nick profile_image created_at user_product_like user_bori_gallery_like');
+    const user = await User.findById(req.params.user_id).select('_id email sns_id nick profile_image created_at user_bori_goods_like user_bori_gallery_like');
     return res.status(200).json({
       _id: user._id,
       email: user.email,
@@ -12,7 +12,7 @@ exports.getUserInfo = async (req, res, next) => {
       user_role: user.user_role,
       sns_id: user.sns_id,
       created_at: user.created_at,
-      user_product_like: user.user_product_like,
+      user_bori_goods_like: user.user_bori_goods_like,
       user_bori_gallery_like: user.user_bori_gallery_like,
     });
   } catch(error) {

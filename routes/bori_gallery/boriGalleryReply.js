@@ -9,7 +9,7 @@ router.get('/:bori_gallery_id/:limit', getBoriGalleryReply);
 POST /bori-gallery-reply
   {
     user_id: ~~~,
-    product_id: ~~~,
+    bori_goods_id: ~~~,
     content: ~~~
   }
 */

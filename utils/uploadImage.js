@@ -14,10 +14,10 @@ const upload = multer({
   limits: { fileSize: 30 * 1024 * 1024 },
 });
 
-const productUpload = multer({
+const boriGoodsUpload = multer({
   storage: multer.diskStorage({
     destination(req, file, cb) {
-      cb(null, 'product_images/');
+      cb(null, 'bori_goods_images/');
     },
     filename(req, file, cb) {
       const ext = path.extname(file.originalname);
@@ -27,4 +27,4 @@ const productUpload = multer({
   limits: { fileSize: 30 * 1024 * 1024 },
 });
 
-module.exports = { upload, productUpload };
+module.exports = { upload, boriGoodsUpload };

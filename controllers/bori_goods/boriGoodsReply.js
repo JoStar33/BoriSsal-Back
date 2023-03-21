@@ -1,16 +1,16 @@
-const ProductReply = require("../../schemas/product/productReply")
+const BoriGoodsReply = require("../../schemas/bori_goods/boriGoodsReply")
 
 //제품에 대한 모든 댓글정보를 가지고 온다.
-exports.getProductReply = async (req, res, next) => {
+exports.getBoriGoodsReply = async (req, res, next) => {
   try {
     let overflow = false
-    const productReply = await ProductReply.find({
-      product_id: req.params.product_id
+    const boriGoodsReply = await BoriGoodsReply.find({
+      bori_goods_id: req.params.bori_goods_id
     }).limit(parseInt(req.params.limit) * 10).sort({_id: -1});
-    if (parseInt(req.params.limit) * 10 > productReply.length) {
+    if (parseInt(req.params.limit) * 10 > boriGoodsReply.length) {
       overflow = true
     }
-    return res.status(200).json({product_reply: productReply, overflow: overflow});
+    return res.status(200).json({bori_goods_reply: boriGoodsReply, overflow: overflow});
   } catch(error) {
     console.error(error);
     return next(error);
@@ -20,16 +20,16 @@ exports.getProductReply = async (req, res, next) => {
 
 //상품 정보, 댓글 정보
 //맨처음 댓글을 생성한 케이스.
-exports.makeProductReply = async (req, res, next) => {
+exports.makeBoriGoodsReply = async (req, res, next) => {
   try {
-    const productReply = await ProductReply.create({
+    const boriGoodsReply = await BoriGoodsReply.create({
       user_id: req.body.user_id,
       email: req.body.email,
-      product_id: req.body.product_id,
+      bori_goods_id: req.body.bori_goods_id,
       content: req.body.content,
       reply_child: []
     });
-    return res.status(200).json(productReply);
+    return res.status(200).json(boriGoodsReply);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -44,10 +44,10 @@ exports.makeProductReply = async (req, res, next) => {
     content: ~~~
   }
 */
-exports.makeProductChildReply = async (req, res, next) => {
+exports.makeBoriGoodsChildReply = async (req, res, next) => {
   try {
     console.log(req.body);
-    await ProductReply.findByIdAndUpdate(req.body.reply_id, {
+    await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         reply_child: {
           user_id: req.body.user_id,
@@ -73,12 +73,12 @@ exports.makeProductChildReply = async (req, res, next) => {
     content: ~~~
   }
 */
-exports.updateProductReply = async (req, res, next) => {
+exports.updateBoriGoodsReply = async (req, res, next) => {
   try {
-    const productReply = await ProductReply.findByIdAndUpdate(req.body.reply_id, {
+    const boriGoodsReply = await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
       content: req.body.content
     });
-    return res.status(200).json(productReply);
+    return res.status(200).json(boriGoodsReply);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -93,9 +93,9 @@ exports.updateProductReply = async (req, res, next) => {
     content: ~~~
   }
 */
-exports.updateProductChildReply = async (req, res, next) => {
+exports.updateBoriGoodsChildReply = async (req, res, next) => {
   try {
-    await ProductReply.updateOne({ _id: req.body.reply_id, "reply_child._id": req.body.child_reply_id}, {
+    await BoriGoodsReply.updateOne({ _id: req.body.reply_id, "reply_child._id": req.body.child_reply_id}, {
       $set: { "reply_child.$.content": req.body.content }
     });
     return res.status(200).json({message: "댓글 업데이트 완료."});
@@ -110,9 +110,9 @@ exports.updateProductChildReply = async (req, res, next) => {
     reply_id: ~~~
   }
 */
-exports.deleteProductReply = async (req, res, next) => {
+exports.deleteBoriGoodsReply = async (req, res, next) => {
   try {
-    await ProductReply.remove({
+    await BoriGoodsReply.remove({
       _id: req.body.reply_id
     });
     return res.status(200).json("댓글 삭제 완료.");
@@ -128,9 +128,9 @@ exports.deleteProductReply = async (req, res, next) => {
     child_reply_id: ~~~
   }
 */
-exports.deleteProductChildReply = async (req, res, next) => {
+exports.deleteBoriGoodsChildReply = async (req, res, next) => {
   try {
-    await ProductReply.findByIdAndUpdate(req.body.reply_id, {
+    await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
       $pull: { user_like: req.body.child_reply_id }
     });
     return res.status(200).json({

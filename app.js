@@ -15,10 +15,10 @@ const authRouter = require('./routes/user/auth');
 const cartRouter = require('./routes/user/cart');
 const deliverAddressRouter = require('./routes/user/deliverAddress');
 const userRouter = require('./routes/user/user');
-//product
-const productRouter = require('./routes/product/product');
-const productCategoryRouter = require('./routes/product/productCategory');
-const productReplyRouter = require('./routes/product/productReply');
+//bori_goods
+const boriGoodsRouter = require('./routes/bori_goods/boriGoods');
+const boriGoodsCategoryRouter = require('./routes/bori_goods/boriGoodsCategory');
+const boriGoodsReplyRouter = require('./routes/bori_goods/boriGoodsReply');
 //order
 const orderRouter = require('./routes/order/order');
 //bori_gallery
@@ -33,7 +33,7 @@ connect();
 
 app.use(morgan('dev'));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
-app.use('/product_images', express.static(path.join(__dirname, 'product_images')));
+app.use('/bori_goods_images', express.static(path.join(__dirname, 'bori_goods_images')));
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
 app.use(cors({
@@ -60,10 +60,10 @@ app.use('/cart', cartRouter);
 app.use('/deliver-address', deliverAddressRouter);
 app.use('/user', userRouter);
 app.use('/auth', authRouter);
-//product
-app.use('/product', productRouter);
-app.use('/product-category', productCategoryRouter);
-app.use('/product-reply', productReplyRouter);
+//bori_goods
+app.use('/bori-goods', boriGoodsRouter);
+app.use('/bori-goods-category', boriGoodsCategoryRouter);
+app.use('/bori-goods-reply', boriGoodsReplyRouter);
 //order
 app.use('/order', orderRouter);
 //bori_gallery

@@ -167,7 +167,7 @@ exports.login = (req, res, next) => {
         user_role: user.user_role,
         sns_id: user.sns_id,
         created_at: user.created_at,
-        user_product_like: user.user_product_like,
+        user_bori_goods_like: user.user_bori_goods_like,
         user_bori_gallery_like: user.user_bori_gallery_like,
       });
     });

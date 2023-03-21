@@ -3,13 +3,13 @@ const { replySchema } = require('../common/reply');
 const { Schema } = mongoose;
 const { Types: { ObjectId } } = Schema;
 
-const productReplySchema = new Schema({
+const boriGoodsReplySchema = new Schema({
   ...replySchema.obj,
-  product_id: {
+  bori_goods_id: {
     type: ObjectId,
     required: true,
-    ref: 'Product',
+    ref: 'BoriGoods',
   }
 });
 
-module.exports = mongoose.model('ProductReply', productReplySchema);
+module.exports = mongoose.model('BoriGoodsReply', boriGoodsReplySchema);

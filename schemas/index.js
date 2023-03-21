@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const connect = () => {
-  if (process.env.NODE_ENV !== 'production') {
+  if (process.env.NODE_ENV !== 'boriGoodsion') {
     mongoose.set('debug', true);
   }
   mongoose.connect(process.env.MONGODB_CONNECT_KEY, {

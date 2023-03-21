@@ -2,33 +2,33 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const { Types: { ObjectId } } = Schema;
 
-const productSchema = new Schema({
+const boriGoodsSchema = new Schema({
   category_id: {
     type: ObjectId,
     required: true,
-    ref: 'ProductCategory',
+    ref: 'BoriGoodsCategory',
   },
-  product_name: {
+  bori_goods_name: {
     type: String,
     allowNull: false,
   },
-  product_price: {
+  bori_goods_price: {
     type: Number,
     allowNull: false,
   },
-  product_stock: {
+  bori_goods_stock: {
     type: Number,
     allowNull: false,
   },
-  product_desc: {
+  bori_goods_desc: {
     type: String,
     allowNull: false,
   },
-  product_like: {
+  bori_goods_like: {
     type: Number,
     default: 0
   },
-  product_image: {
+  bori_goods_image: {
     type: String,
     allowNull: false,
   },
@@ -38,4 +38,4 @@ const productSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model('BoriGoods', boriGoodsSchema);

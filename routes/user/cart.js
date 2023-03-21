@@ -11,10 +11,10 @@ router.get('/:user_id', isLoggedIn, getCart);
 POST /cart
 {
   user_id: ~~,
-  product: [
+  boriGoods: [
     {
-      product_id: ~~~
-      product_stock: ~~~
+      bori_goods_id: ~~~
+      bori_goods_stock: ~~~
     }
   ]
 }
@@ -25,7 +25,7 @@ router.post('/', isLoggedIn, makeCart);
 PATCH /cart
 {
   cart_id: ~~~,
-  product_stock: ~~~
+  bori_goods_stock: ~~~
 }
 */
 router.patch('/', isLoggedIn, updateCart);

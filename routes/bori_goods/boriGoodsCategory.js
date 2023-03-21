@@ -1,12 +1,12 @@
 const express = require("express");
-const { getCategory, makeCategory, updateCategory, deleteCategory } = require("../../controllers/product/productCategory")
+const { getCategory, makeCategory, updateCategory, deleteCategory } = require("../../controllers/bori_goods/boriGoodsCategory")
 const router = express.Router();
 
-//GET /product-category
+//GET /bori_goods-category
 router.get('/', getCategory);
 
 /*
-POST /product-category
+POST /bori_goods-category
   {
     category_name: ~~~
   }
@@ -14,7 +14,7 @@ POST /product-category
 router.post('/', makeCategory);
 
 /*
-PATCH /product-category
+PATCH /bori_goods-category
   {
     category_id: ~~~,
     category_name: ~~~
@@ -23,7 +23,7 @@ PATCH /product-category
 router.patch('/', updateCategory);
 
 /*
-DELETE /product-category
+DELETE /bori_goods-category
   {
     category_id: ~~~
   }

@@ -45,13 +45,13 @@ exports.deleteOrder = async (req, res, next) => {
     user: {
       user_id: ~
     },
-    products: [
+    boriGoodss: [
       {
-        product_id: ~,
-        product_name: ~,
-        product_image: ~,
-        product_stock: ~,
-        product_price: ~
+        bori_goods_id: ~,
+        bori_goods_name: ~,
+        bori_goods_image: ~,
+        bori_goods_stock: ~,
+        bori_goods_price: ~
       }
     ],
   ]
@@ -62,7 +62,7 @@ exports.makeOrder = async (req, res, next) => {
       {
         user_id: req.body.user_id,
         order_status: false,
-        order_detail: req.body.products
+        order_detail: req.body.boriGoodss
       }
     );
     console.log("주문아이디: " + newOrder._id);
