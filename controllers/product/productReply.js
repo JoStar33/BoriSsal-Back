@@ -3,10 +3,14 @@ const ProductReply = require("../../schemas/product/productReply")
 //제품에 대한 모든 댓글정보를 가지고 온다.
 exports.getProductReply = async (req, res, next) => {
   try {
+    let overflow = false
     const productReply = await ProductReply.find({
       product_id: req.params.product_id
-    }).sort({_id: -1});
-    return res.status(200).json(productReply);
+    }).limit(parseInt(req.params.limit) * 10).sort({_id: -1});
+    if (parseInt(req.params.limit) * 10 > productReply.length) {
+      overflow = true
+    }
+    return res.status(200).json({product_reply: productReply, overflow: overflow});
   } catch(error) {
     console.error(error);
     return next(error);
@@ -42,12 +46,15 @@ exports.makeProductReply = async (req, res, next) => {
 */
 exports.makeProductChildReply = async (req, res, next) => {
   try {
+    console.log(req.body);
     await ProductReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
-        user_id: req.body.user_id,
-        email: req.body.email,
-        content: req.body.content,
-        created_at: new Date.now
+        reply_child: {
+          user_id: req.body.user_id,
+          email: req.body.email,
+          content: req.body.content,
+          created_at: new Date()
+        }
       }
     });
     return res.status(200).json({

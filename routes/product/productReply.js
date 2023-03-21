@@ -2,8 +2,8 @@ const express = require("express");
 const { getProductReply, makeProductReply, makeProductChildReply, updateProductReply, 
   updateProductChildReply, deleteProductReply, deleteProductChildReply } = require("../../controllers/product/productReply")
 const router = express.Router();
-// GET /:product_id
-router.get('/:product_id', getProductReply);
+// GET /:product_id/:limit
+router.get('/:product_id/:limit', getProductReply);
 
 /*
 POST /product-reply

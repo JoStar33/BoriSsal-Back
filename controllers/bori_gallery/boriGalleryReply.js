@@ -5,8 +5,11 @@ exports.getBoriGalleryReply = async (req, res, next) => {
   try {
     const boriGalleryReply = await BoriGalleryReply.find({
       bori_gallery_id: req.params.bori_gallery_id
-    });
-    return res.status(200).json(boriGalleryReply);
+    }).limit(parseInt(req.params.limit) * 10).sort({_id: -1});
+    if (parseInt(req.params.limit) * 10 > productReply.length) {
+      overflow = true
+    }
+    return res.status(200).json({bori_gallery_reply: boriGalleryReply, overflow: overflow});
   } catch(error) {
     console.error(error);
     return next(error);
@@ -43,10 +46,12 @@ exports.makeBoriGalleryChildReply = async (req, res, next) => {
   try {
     await BoriGalleryReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
-        user_id: req.body.user_id,
-        email: req.body.email,
-        content: req.body.content,
-        created_at: new Date.now
+        reply_child:{
+          user_id: req.body.user_id,
+          email: req.body.email,
+          content: req.body.content,
+          created_at: new Date()
+        }
       }
     });
     return res.status(200).json({message: "대댓글 등록 완료."});

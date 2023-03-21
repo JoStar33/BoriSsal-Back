@@ -2,8 +2,8 @@ const express = require("express");
 const { getBoriGalleryReply, makeBoriGalleryReply, makeBoriGalleryChildReply, 
   updateBoriGalleryReply, updateBoriGalleryChildReply, deleteBoriGalleryReply, deleteBoriGalleryChildReply } = require("../../controllers/bori_gallery/boriGalleryReply")
 const router = express.Router();
-// GET /:bori_gallery_id
-router.get('/:bori_gallery_id', getBoriGalleryReply);
+// GET /:bori_gallery_id/:limit
+router.get('/:bori_gallery_id/:limit', getBoriGalleryReply);
 
 /*
 POST /bori-gallery-reply
