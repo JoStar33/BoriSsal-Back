@@ -16,7 +16,7 @@ POST /order
     products: [
       {
         product_id: ~,
-        product_count: ~,
+        product_stock: ~,
         product_price: ~
       }
     ],

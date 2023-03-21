@@ -1,5 +1,5 @@
 const Cart = require("../../schemas/user/cart");
-const { asyncForEach } = require('../../utils/asyncForEach');
+const Product = require("../../schemas/product/product");
 
 //모든 장바구니 정보 조회.
 //상세 장바구니 조회는 기능이 필요없다고 판단함.
@@ -16,25 +16,33 @@ exports.getCart = async (req, res, next) => {
 };
 
 /*
+다중 등록할 일이 없음. 걍 단일로 수정.
+서버에 부담을 안줄 수 있는 방법을 찾다가 클라이언트에서 모든 정보를 보내도록 수정.
 {
   user_id: ~~,
-  product: [
-    {
-      product_id: ~~~
-      product_count: ~~~
-    }
-  ]
+  product_id: ~~~,
+  product_stock: ~~~
 }
 */
 exports.makeCart = async (req, res, next) => {
-  const { user_id, products } = req.body;
+  const { user_id, product_id, product_name, product_image, product_price } = req.body;
   try {
-    await asyncForEach(products, async (product) => {
-      await Cart.create({
-        user_id: user_id,
-        product_id: product.product_id,
-        product_count: product.product_count
-      });
+    const exCart = await Cart.findOne({
+      user_id: user_id,
+      product_id: product_id
+    })
+    if (exCart) {
+      return res
+        .status(400)
+        .json({ message: "이미 장바구니에 등록된 상품입니다." });
+    }
+    await Cart.create({
+      user_id: user_id,
+      product_id: product_id,
+      product_stock: 1,
+      product_name: product_name,
+      product_image: product_image,
+      product_price: product_price
     });
     return res.status(200).json({
       message: "장바구니 등록 성공",
@@ -47,10 +55,10 @@ exports.makeCart = async (req, res, next) => {
 
 //수량을 수정하는 경우밖에 없으므로
 exports.updateCart = async (req, res, next) => {
-  const { cart_id, product_count } = req.body;
+  const { cart_id, product_stock } = req.body;
   try {
     const cart = await Cart.findByIdAndUpdate(cart_id, {
-      product_count: product_count
+      product_stock: product_stock
     });
     return res.status(200).json(cart);
   } catch(error) {

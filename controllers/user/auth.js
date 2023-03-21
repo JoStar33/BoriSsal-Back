@@ -45,7 +45,6 @@ exports.passwordChange = async (req, res, next) => {
   const { id, password, newPassword } = req.body;
   try {
     const user = await User.findById(id);
-    const hashPass = await bcrypt.hash(password, 12);
     const hashNewPass = await bcrypt.hash(newPassword, 12);
     if (!user) {
       return res

@@ -48,7 +48,9 @@ exports.deleteOrder = async (req, res, next) => {
     products: [
       {
         product_id: ~,
-        product_count: ~,
+        product_name: ~,
+        product_image: ~,
+        product_stock: ~,
         product_price: ~
       }
     ],
@@ -60,7 +62,7 @@ exports.makeOrder = async (req, res, next) => {
       {
         user_id: req.body.user_id,
         order_status: false,
-        orderDetail: req.body.products
+        order_detail: req.body.products
       }
     );
     console.log("주문아이디: " + newOrder._id);

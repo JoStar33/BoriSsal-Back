@@ -13,10 +13,22 @@ const cartSchema = new Schema({
     required: true,
     ref: 'Product',
   },
-  product_count: {
+  product_stock: {
     type: Number,
     required: true,
-  }
+  },
+  product_name: {
+    type: String,
+    required: true,
+  },
+  product_image: {
+    type: String,
+    required: true,
+  },
+  product_price: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model('Cart', cartSchema);
