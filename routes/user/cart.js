@@ -14,7 +14,7 @@ POST /cart
   boriGoods: [
     {
       bori_goods_id: ~~~
-      bori_goods_stock: ~~~
+      bori_goods_count: ~~~
     }
   ]
 }
@@ -25,7 +25,7 @@ router.post('/', isLoggedIn, makeCart);
 PATCH /cart
 {
   cart_id: ~~~,
-  bori_goods_stock: ~~~
+  bori_goods_count: ~~~
 }
 */
 router.patch('/', isLoggedIn, updateCart);

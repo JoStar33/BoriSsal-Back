@@ -18,7 +18,7 @@ const orderDetailSchema = new Schema({
     type: String,
     required: true,
   },
-  bori_goods_stock: {
+  bori_goods_count: {
     type: Number,
     required: true
   },

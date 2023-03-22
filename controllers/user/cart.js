@@ -21,7 +21,7 @@ exports.getCart = async (req, res, next) => {
 {
   user_id: ~~,
   bori_goods_id: ~~~,
-  bori_goods_stock: ~~~
+  bori_goods_count: ~~~
 }
 */
 exports.makeCart = async (req, res, next) => {
@@ -39,7 +39,7 @@ exports.makeCart = async (req, res, next) => {
     await Cart.create({
       user_id: user_id,
       bori_goods_id: bori_goods_id,
-      bori_goods_stock: 1,
+      bori_goods_count: 1,
       bori_goods_name: bori_goods_name,
       bori_goods_image: bori_goods_image,
       bori_goods_price: bori_goods_price
@@ -55,10 +55,10 @@ exports.makeCart = async (req, res, next) => {
 
 //수량을 수정하는 경우밖에 없으므로
 exports.updateCart = async (req, res, next) => {
-  const { cart_id, bori_goods_stock } = req.body;
+  const { cart_id, bori_goods_count } = req.body;
   try {
     const cart = await Cart.findByIdAndUpdate(cart_id, {
-      bori_goods_stock: bori_goods_stock
+      bori_goods_count: bori_goods_count
     });
     return res.status(200).json(cart);
   } catch(error) {

@@ -45,12 +45,12 @@ exports.deleteOrder = async (req, res, next) => {
     user: {
       user_id: ~
     },
-    boriGoodss: [
+    bori_goods: [
       {
         bori_goods_id: ~,
         bori_goods_name: ~,
         bori_goods_image: ~,
-        bori_goods_stock: ~,
+        bori_goods_count: ~,
         bori_goods_price: ~
       }
     ],
@@ -58,14 +58,14 @@ exports.deleteOrder = async (req, res, next) => {
 */
 exports.makeOrder = async (req, res, next) => {
   try {
-    const newOrder = await Order.create(
+    await Order.create(
       {
         user_id: req.body.user_id,
         order_status: false,
-        order_detail: req.body.boriGoodss
+        order_detail: req.body.bori_goods
       }
     );
-    console.log("주문아이디: " + newOrder._id);
+    res.status(200).json({message: `정상적으로 주문됐습니다.`});
   } catch(error) {
     console.error(error);
     return next(error);

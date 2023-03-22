@@ -13,7 +13,7 @@ const cartSchema = new Schema({
     required: true,
     ref: 'BoriGoods',
   },
-  bori_goods_stock: {
+  bori_goods_count: {
     type: Number,
     required: true,
   },

@@ -16,7 +16,7 @@ POST /order
     boriGoodss: [
       {
         bori_goods_id: ~,
-        bori_goods_stock: ~,
+        bori_goods_count: ~,
         bori_goods_price: ~
       }
     ],
