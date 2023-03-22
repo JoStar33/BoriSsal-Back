@@ -241,6 +241,7 @@ exports.googleLogin = (req, res, next) => {
 exports.logout = (req, res) => {
   try {
     req.logout();
+    req.session.destroy();
     return res.status(200).json({
       message: "로그아웃이 성공적으로 완료됐습니다..",
     });
