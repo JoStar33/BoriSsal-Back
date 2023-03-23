@@ -1,4 +1,5 @@
 const DeliverAddress = require("../../schemas/user/deliverAddress");
+const Cart = require("../../schemas/user/cart");
 
 exports.updateDeliverAddress = async (req, res, next) => {
   const { user_id, address_type, address_info } = req.body;
@@ -39,7 +40,7 @@ exports.updateDeliverAddress = async (req, res, next) => {
 
 exports.getDeliverAddress = async (req, res, next) => {
   try {
-    const deliverAddress = await DeliverAddress.find({
+    const deliverAddress = await DeliverAddress.findOne({
       user_id: req.params.user_id
     });
     return res.status(200).json(deliverAddress);

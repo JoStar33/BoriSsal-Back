@@ -1,6 +1,7 @@
 const Order = require("../../schemas/order/order");
 //상세주문 정보는 배열의 형태로 관리한다.
 //const OrderDetail = require("../schemas/order/orderDetail");
+const { asyncForEach } = require('../../utils/asyncForEach');
 
 exports.getOrder = async (req, res, next) => {
   try {
@@ -57,12 +58,18 @@ exports.deleteOrder = async (req, res, next) => {
   ]
 */
 exports.makeOrder = async (req, res, next) => {
+  const {user_id, bori_goods} = req.body
   try {
+    await asyncForEach(bori_goods, async (goods) => {
+      await Cart.remove({
+        bori_goods_id: goods.bori_goods_id
+      });
+    });
     await Order.create(
       {
-        user_id: req.body.user_id,
+        user_id: user_id,
         order_status: false,
-        order_detail: req.body.bori_goods
+        order_detail: bori_goods
       }
     );
     res.status(200).json({message: `정상적으로 주문됐습니다.`});
