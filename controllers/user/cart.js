@@ -69,9 +69,12 @@ exports.updateCart = async (req, res, next) => {
 
 exports.deleteCart = async (req, res, next) => {
   try {
-    await Cart.remove({
-      _id: req.body.cart_id
+    await Cart.findOneAndRemove({
+      user_id: req.params.user_id,
+      _id: req.params.cart_id
     });
+    return res.status(200).json({
+      message: '삭제 성공!'});
   } catch(error) {
     console.error(error);
     return next(error);

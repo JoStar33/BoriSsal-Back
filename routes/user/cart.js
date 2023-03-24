@@ -36,6 +36,6 @@ DELETE /cart
   cart_id: ~~~
 }
 */
-router.delete('/', isLoggedIn, deleteCart);
+router.delete('/:user_id/:cart_id', isLoggedIn, deleteCart);
 
 module.exports = router;

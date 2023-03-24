@@ -1,4 +1,5 @@
 const Order = require("../../schemas/order/order");
+const Cart = require("../../schemas/user/cart")
 //상세주문 정보는 배열의 형태로 관리한다.
 //const OrderDetail = require("../schemas/order/orderDetail");
 const { asyncForEach } = require('../../utils/asyncForEach');
@@ -61,7 +62,7 @@ exports.makeOrder = async (req, res, next) => {
   const {user_id, bori_goods} = req.body
   try {
     await asyncForEach(bori_goods, async (goods) => {
-      await Cart.remove({
+      await Cart.findOneAndRemove({
         bori_goods_id: goods.bori_goods_id
       });
     });
