@@ -41,7 +41,7 @@ app.use(cors({
   credentials: true,  // 출처 허용 옵션
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
-const days = 1;
+const days = 0.25;
 app.use(session({
   secret: process.env.COOKIE_SECRET || config.sessionSecretKey,
   resave: false,
