@@ -21,7 +21,7 @@ exports.getBoriGalleryReply = async (req, res, next) => {
 exports.makeBoriGalleryReply = async (req, res, next) => {
   try {
     const boriGalleryReply = await BoriGalleryReply.create({
-      user_id: req.body.user_id,
+      user_id: req.session.passport.user,
       email: req.body.email,
       bori_gallery_id: req.body.bori_gallery_id,
       content: req.body.content,
@@ -38,7 +38,6 @@ exports.makeBoriGalleryReply = async (req, res, next) => {
 /*
   {
     reply_id: ~~~,
-    user_id: ~~~,
     content: ~~~
   }
 */
@@ -47,7 +46,7 @@ exports.makeBoriGalleryChildReply = async (req, res, next) => {
     await BoriGalleryReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         reply_child:{
-          user_id: req.body.user_id,
+          user_id: req.session.passport.user,
           email: req.body.email,
           content: req.body.content,
           created_at: new Date()

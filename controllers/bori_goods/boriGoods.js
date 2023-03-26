@@ -57,11 +57,10 @@ exports.makeBoriGoods = async (req, res, next) => {
 /*
 {
   bori_goods_id: ~~~,
-  user_id: ~~~
 }
 */
 exports.likeBoriGoods = async (req, res, next) => {
-  const {bori_goods_id, user_id} = req.body;
+  const {bori_goods_id} = req.body;
   try {
     console.log(req.body);
     await BoriGoods.findByIdAndUpdate(
@@ -72,7 +71,7 @@ exports.likeBoriGoods = async (req, res, next) => {
       }
     );
     const user = await User.findByIdAndUpdate(
-      user_id, {
+      req.session.passport.user, {
         $push: { user_bori_goods_like: bori_goods_id }
       }
     );
@@ -86,7 +85,7 @@ exports.likeBoriGoods = async (req, res, next) => {
 };
 
 exports.dislikeBoriGoods = async (req, res, next) => {
-  const {bori_goods_id, user_id} = req.body;
+  const {bori_goods_id} = req.body;
   try {
     await BoriGoods.findByIdAndUpdate(
       bori_goods_id, {
@@ -96,7 +95,7 @@ exports.dislikeBoriGoods = async (req, res, next) => {
       }
     );
     const user = await User.findByIdAndUpdate(
-      user_id, {
+      req.session.passport.user, {
         $pull: { user_bori_goods_like: bori_goods_id }
       }
     );

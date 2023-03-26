@@ -23,7 +23,7 @@ exports.getBoriGoodsReply = async (req, res, next) => {
 exports.makeBoriGoodsReply = async (req, res, next) => {
   try {
     const boriGoodsReply = await BoriGoodsReply.create({
-      user_id: req.body.user_id,
+      user_id: req.session.passport.user,
       email: req.body.email,
       bori_goods_id: req.body.bori_goods_id,
       content: req.body.content,
@@ -40,7 +40,6 @@ exports.makeBoriGoodsReply = async (req, res, next) => {
 /*
   {
     reply_id: ~~~,
-    user_id: ~~~,
     content: ~~~
   }
 */
@@ -50,7 +49,7 @@ exports.makeBoriGoodsChildReply = async (req, res, next) => {
     await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         reply_child: {
-          user_id: req.body.user_id,
+          user_id: req.session.passport.user,
           email: req.body.email,
           content: req.body.content,
           created_at: new Date()

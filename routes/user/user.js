@@ -14,13 +14,13 @@ try {
 };
 
 
-//GET /user/:user_id
-router.get('/:user_id', isLoggedIn, getUserInfo);
+//GET /user/
+router.get('/', isLoggedIn, getUserInfo);
 
 //PATCH /user/nick
 router.patch('/nick', isLoggedIn, modifyUserNick);
 
 //POST /user/profile-image
-router.post('/profile-image/:user_id', isLoggedIn, upload.single('img'), setUserProfileImage);
+router.post('/profile-image/', isLoggedIn, upload.single('img'), setUserProfileImage);
 
 module.exports = router;

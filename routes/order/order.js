@@ -2,18 +2,16 @@ const express = require("express");
 const { getOrder, getOrderById, deleteOrder, makeOrder } = require("../../controllers/order/order");
 const router = express.Router();
 
-//GET /order/:user_id
-router.get('/:user_id', getOrder);
+//GET /order/
+router.get('/', getOrder);
 
 
-//GET /order/order-detail/:user_id
-router.get('/order-detail/:order_id', getOrderById);
-
+//GET /order/order-detail/
+router.get('/order-detail/', getOrderById);
 /*
 POST /order
   [
-    user_id: ~,
-    boriGoodss: [
+    boriGoods: [
       {
         bori_goods_id: ~,
         bori_goods_count: ~,
@@ -27,7 +25,6 @@ router.post('/', makeOrder);
 /*
 POST /order
   [
-    user_id: ~,
     order_id: ~
   ]
 */

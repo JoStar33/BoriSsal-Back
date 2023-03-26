@@ -14,7 +14,6 @@ router.get('/:bori_gallery_id', getBoriGalleryById);
 /*
 POST /bori-gallery
 {
-  user_id: ~~~,
   bori_gallery: {
     bori_gallery_title: ~~~,
     bori_gallery_desc: ~~~,
@@ -56,7 +55,6 @@ router.delete('/', isLoggedIn, deleteBoriGallery);
 PATCH /bori-gallery/like
 {
   bori_gallery_id: ~~~,
-  user_id: ~~~
 }
 */
 router.patch('/like', isLoggedIn, likeBoriGallery);
@@ -65,7 +63,6 @@ router.patch('/like', isLoggedIn, likeBoriGallery);
 PATCH /bori-gallery/dislike
 {
   bori_gallery_id: ~~~,
-  user_id: ~~~
 }
 */
 router.patch('/dislike', isLoggedIn, dislikeBoriGallery);

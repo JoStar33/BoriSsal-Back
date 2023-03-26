@@ -3,14 +3,13 @@ const { isLoggedIn } = require("../../middlewares");
 const { getCart, makeCart, updateCart, deleteCart } = require("../../controllers/user/cart")
 const router = express.Router();
 /*
-GET /cart/:user_id
+GET /cart/
 */
-router.get('/:user_id', isLoggedIn, getCart);
+router.get('/', isLoggedIn, getCart);
 
 /*
 POST /cart
 {
-  user_id: ~~,
   boriGoods: [
     {
       bori_goods_id: ~~~
@@ -36,6 +35,6 @@ DELETE /cart
   cart_id: ~~~
 }
 */
-router.delete('/:user_id/:cart_id', isLoggedIn, deleteCart);
+router.delete('/:cart_id', isLoggedIn, deleteCart);
 
 module.exports = router;

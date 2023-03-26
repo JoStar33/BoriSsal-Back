@@ -8,7 +8,6 @@ router.get('/:bori_goods_id/:limit', getBoriGoodsReply);
 /*
 POST /bori_goods-reply
   {
-    user_id: ~~~,
     bori_goods_id: ~~~,
     content: ~~~
   }
@@ -19,7 +18,6 @@ router.post('/', makeBoriGoodsReply);
 POST /bori_goods-reply/child
   {
     reply_id: ~~~,
-    user_id: ~~~,
     content: ~~~
   }
 */

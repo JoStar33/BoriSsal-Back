@@ -28,8 +28,7 @@ router.post('/', isLoggedIn, boriGoodsUpload.single('bori_goods_images'), makeBo
 /*
 PATCH /bori_goods/like
 {
-  bori_goods_id: ~~~,
-  user_id: ~~~
+  bori_goods_id: ~~~
 }
 */
 router.patch('/like', isLoggedIn, likeBoriGoods);
@@ -37,8 +36,7 @@ router.patch('/like', isLoggedIn, likeBoriGoods);
 /*
 PATCH /bori_goods/dislike
 {
-  bori_goods_id: ~~~,
-  user_id: ~~~
+  bori_goods_id: ~~~
 }
 */
 router.patch('/dislike', isLoggedIn, dislikeBoriGoods);

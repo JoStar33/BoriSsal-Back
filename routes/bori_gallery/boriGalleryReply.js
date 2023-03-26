@@ -8,7 +8,6 @@ router.get('/:bori_gallery_id/:limit', getBoriGalleryReply);
 /*
 POST /bori-gallery-reply
   {
-    user_id: ~~~,
     bori_goods_id: ~~~,
     content: ~~~
   }
@@ -19,7 +18,6 @@ router.post('/', makeBoriGalleryReply);
 POST /bori-gallery-reply/child
   {
     reply_id: ~~~,
-    user_id: ~~~,
     content: ~~~
   }
 */

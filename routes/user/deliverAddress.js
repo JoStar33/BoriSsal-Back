@@ -7,7 +7,7 @@ const router = express.Router();
 router.patch('/', isLoggedIn, updateDeliverAddress);
 
 
-// GET /deliver-address/:user_id
-router.get('/:user_id', isLoggedIn, getDeliverAddress);
+// GET /deliver-address/
+router.get('/', isLoggedIn, getDeliverAddress);
 
 module.exports = router;

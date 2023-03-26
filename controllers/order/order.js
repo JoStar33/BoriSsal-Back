@@ -7,7 +7,7 @@ const { asyncForEach } = require('../../utils/asyncForEach');
 exports.getOrder = async (req, res, next) => {
   try {
     const order = await Order.find({
-      user_id: req.params.user_id
+      user_id: req.session.passport.user
     }); 
     return res.status(200).json(order);
   } catch(error) {
@@ -44,9 +44,6 @@ exports.deleteOrder = async (req, res, next) => {
 
 /*
   [
-    user: {
-      user_id: ~
-    },
     bori_goods: [
       {
         bori_goods_id: ~,
@@ -59,7 +56,7 @@ exports.deleteOrder = async (req, res, next) => {
   ]
 */
 exports.makeOrder = async (req, res, next) => {
-  const {user_id, bori_goods} = req.body
+  const { bori_goods } = req.body
   try {
     await asyncForEach(bori_goods, async (goods) => {
       await Cart.findOneAndRemove({
@@ -68,7 +65,7 @@ exports.makeOrder = async (req, res, next) => {
     });
     await Order.create(
       {
-        user_id: user_id,
+        user_id: req.session.passport.user,
         order_status: false,
         order_detail: bori_goods
       }

@@ -27,7 +27,7 @@ exports.makeBoriGallery = async (req, res, next) => {
   const { bori_gallery } = req.body;
   try {
     const boriGallery = await BoriGallery.create({
-      user_id: req.body.user_id,
+      user_id: req.session.passport.user,
       bori_gallery_title: bori_gallery.bori_gallery_title,
       bori_gallery_desc: bori_gallery.bori_gallery_desc,
       bori_gallery_image: `/img/${req.file.filename}`
@@ -83,7 +83,7 @@ exports.likeBoriGallery = async (req, res, next) => {
       }
     );
     const user = await User.findByIdAndUpdate(
-      req.body.user_id, {
+      req.session.passport.user, {
         $push: { user_bori_gallery_like: req.body.bori_gallery_id }
       }
     );
@@ -104,7 +104,7 @@ exports.dislikeBoriGallery = async (req, res, next) => {
       }
     );
     const user = await User.findByIdAndUpdate(
-      req.body.user_id, {
+      req.session.passport.user, {
         $pull: { user_bori_gallery_like: req.body.bori_gallery_id }
       }
     );

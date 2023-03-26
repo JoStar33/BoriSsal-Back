@@ -212,7 +212,7 @@ exports.kakaoLogin = (req, res, next) => {
       if (loginError) {
         return res.redirect(`${process.env.REDIRECT_URL}/same-email`);
       }
-      res.redirect(`${process.env.REDIRECT_URL}/oauth?user_id=${user._id}`);
+      res.redirect(`${process.env.REDIRECT_URL}/oauth`);
     });
   })(req, res, next);
 }
@@ -233,7 +233,7 @@ exports.googleLogin = (req, res, next) => {
       if (loginError) {
         return res.redirect(`${process.env.REDIRECT_URL}/same-email`);
       }
-      res.redirect(`${process.env.REDIRECT_URL}/oauth?user_id=${user._id}`);
+      res.redirect(`${process.env.REDIRECT_URL}/oauth`);
     });
   })(req, res, next);
 }

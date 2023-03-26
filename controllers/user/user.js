@@ -2,19 +2,8 @@ const User = require("../../schemas/user/user");
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.user_id).select('_id email sns_id nick profile_image created_at user_bori_goods_like user_bori_gallery_like');
-    return res.status(200).json({
-      _id: user._id,
-      email: user.email,
-      nick: user.nick,
-      provider: user.provider,
-      profile_image: user.profile_image,
-      user_role: user.user_role,
-      sns_id: user.sns_id,
-      created_at: user.created_at,
-      user_bori_goods_like: user.user_bori_goods_like,
-      user_bori_gallery_like: user.user_bori_gallery_like,
-    });
+    const user = await User.findById(req.session.passport.user).select('email sns_id nick profile_image created_at user_bori_goods_like user_bori_gallery_like');
+    return res.status(200).json(user);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -23,7 +12,7 @@ exports.getUserInfo = async (req, res, next) => {
 
 exports.modifyUserNick = async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.params.user_id, {
+    await User.findByIdAndUpdate(req.session.passport.user, {
       nick: req.body.nick,
     });
     return res.status(200).json({
@@ -37,7 +26,7 @@ exports.modifyUserNick = async (req, res, next) => {
 
 exports.setUserProfileImage = async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.params.user_id, {
+    await User.findByIdAndUpdate(req.session.passport.user, {
       profile_image: `/img/${req.file.filename}`,
     });
     res.status(200).json({profile_image: `/img/${req.file.filename}`});
