@@ -2,7 +2,7 @@ const User = require("../../schemas/user/user");
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    const user = await User.findById(req.session.passport.user).select('email sns_id nick profile_image created_at user_bori_goods_like user_bori_gallery_like');
+    const user = await User.findById(req.session.passport.user).select('-_id email sns_id nick profile_image created_at user_bori_goods_like user_bori_gallery_like');
     return res.status(200).json(user);
   } catch(error) {
     console.error(error);
