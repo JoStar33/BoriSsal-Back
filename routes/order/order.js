@@ -1,5 +1,5 @@
 const express = require("express");
-const { getOrder, getOrderById, deleteOrder, makeOrder } = require("../../controllers/order/order");
+const { getOrder, getOrderById, deleteOrder, updateOrderStatus, makeOrder } = require("../../controllers/order/order");
 const router = express.Router();
 
 //GET /order/
@@ -22,6 +22,14 @@ POST /order
 */
 router.post('/', makeOrder);
 
+/*
+PATCH /order
+  {
+    order_id: ~~~,
+    order_status: ~~~
+  }
+*/
+router.patch('/', updateOrderStatus)
 /*
 POST /order
   [

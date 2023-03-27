@@ -16,6 +16,27 @@ exports.getOrder = async (req, res, next) => {
   };
 };
 
+/*
+{
+  order_id: ~~~,
+  order_status: ~~~,
+}*/
+//patch 
+exports.updateOrderStatus = async (req, res, next) => {
+  const { order_id, order_status } = req.body;
+  try {
+    await Order.findOneAndUpdate(order_id, {
+      order_status: order_status
+    });
+    return res.status(200).json({
+      message: "주문상태 수정 완료."
+    })
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+}
+
 //주문 하나에 대한 정보 조회
 exports.getOrderById = async (req, res, next) => {
   try {

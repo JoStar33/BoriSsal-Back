@@ -84,6 +84,7 @@ exports.likeBoriGoods = async (req, res, next) => {
   }
 };
 
+
 exports.dislikeBoriGoods = async (req, res, next) => {
   const {bori_goods_id} = req.body;
   try {
