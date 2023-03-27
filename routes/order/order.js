@@ -28,7 +28,7 @@ POST /order
     order_id: ~
   ]
 */
-router.delete('/', deleteOrder);
+router.delete('/:order_id', deleteOrder);
 
 
 module.exports = router;

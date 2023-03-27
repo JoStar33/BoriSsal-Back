@@ -8,7 +8,7 @@ exports.getOrder = async (req, res, next) => {
   try {
     const order = await Order.find({
       user_id: req.session.passport.user
-    }); 
+    }).select('-user_id'); 
     return res.status(200).json(order);
   } catch(error) {
     console.error(error);
@@ -21,7 +21,7 @@ exports.getOrderById = async (req, res, next) => {
   try {
     const order = await Order.find({
       order_id: req.params.order_id
-    }); 
+    }).select('-user_id'); ; 
     return res.status(200).json(order);
   } catch(error) {
     console.error(error);
@@ -33,7 +33,7 @@ exports.getOrderById = async (req, res, next) => {
 exports.deleteOrder = async (req, res, next) => {
   try {
     const order = await Order.remove({
-      _id: req.body.order_id
+      _id: req.params.order_id
     });
     return res.status(200).json({message: `정상적으로 삭제되었습니다. ${order._id}`});
   } catch(error) {
@@ -56,7 +56,7 @@ exports.deleteOrder = async (req, res, next) => {
   ]
 */
 exports.makeOrder = async (req, res, next) => {
-  const { bori_goods } = req.body
+  const { bori_goods, price } = req.body
   try {
     await asyncForEach(bori_goods, async (goods) => {
       await Cart.findOneAndRemove({
@@ -66,7 +66,8 @@ exports.makeOrder = async (req, res, next) => {
     await Order.create(
       {
         user_id: req.session.passport.user,
-        order_status: false,
+        price: price,
+        order_status: '배송준비',
         order_detail: bori_goods
       }
     );
