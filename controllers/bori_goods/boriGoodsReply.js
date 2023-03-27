@@ -45,7 +45,6 @@ exports.makeBoriGoodsReply = async (req, res, next) => {
 */
 exports.makeBoriGoodsChildReply = async (req, res, next) => {
   try {
-    console.log(req.body);
     await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         reply_child: {

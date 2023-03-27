@@ -14,7 +14,6 @@ const passwordGenerator = () => {
     let ranPick5 = Math.floor(Math.random() * ranValue4.length);
 		temp_pw = temp_pw + ranValue1[ranPick1] + ranValue2[ranPick2] + ranValue3[ranPick3] + ranValue4[ranPick4] + ranValue4[ranPick5];
 	}
-	console.log("임시 비밀번호는 " + temp_pw + " 입니다.");
   return temp_pw;
 }
 

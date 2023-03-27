@@ -11,7 +11,6 @@ module.exports = () => {
     scope: ['profile', 'email']
   }, async (accessToken, refreshToken, profile, done) => {
     try {
-      console.log(profile);
       const localExUser = await User.findOne({
         $or: [
           { $and: [
@@ -29,10 +28,8 @@ module.exports = () => {
       }
       const exUser = await User.findOne({ sns_id: profile.id, provider: 'google' });
       if (exUser) {
-        console.log(exUser);
         done(null, exUser);
       } else {
-        console.log(exUser);
         const newUser = await User.create({
           email: profile.emails[0].value,
           nick: profile.displayName,
