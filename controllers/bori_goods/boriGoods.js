@@ -24,25 +24,24 @@ exports.getBoriGoodsById = async (req, res, next) => {
 };
 
 exports.makeBoriGoods = async (req, res, next) => {
-  const {category_id, boriGoods} = req.body
+ const {category_id, bori_goods} = JSON.parse(req.body.bori_goods);
   try {
     const exBoriGoods = await BoriGoods.find({
-      bori_goods_name: boriGoods.bori_goods_name
+      bori_goods_name: bori_goods.bori_goods_name
     });
-    if(exBoriGoods.length >= 1) {
+    if(!exBoriGoods) {
       return res.status(400).json({message: "이미 존재하는 상품입니다. 다시 등록해주세요."});
     };
     const newBoriGoods = await BoriGoods.create(
       {
         category_id: category_id,
-        bori_goods_name: boriGoods.bori_goods_name,
-        bori_goods_price: boriGoods.bori_goods_price,
-        bori_goods_stock: boriGoods.bori_goods_stock,
-        bori_goods_desc: boriGoods.bori_goods_desc,
+        bori_goods_name: bori_goods.bori_goods_name,
+        bori_goods_price: bori_goods.bori_goods_price,
+        bori_goods_stock: bori_goods.bori_goods_stock,
+        bori_goods_desc: bori_goods.bori_goods_desc,
         bori_goods_image: `/bori_goods_images/${req.file.filename}`,
       }
     );
-    console.log(newBoriGoods._id);
     return res.status(200).json({
       message: "제품등록이 완료됐습니다.",
       newBoriGoods
@@ -62,7 +61,6 @@ exports.makeBoriGoods = async (req, res, next) => {
 exports.likeBoriGoods = async (req, res, next) => {
   const {bori_goods_id} = req.body;
   try {
-    console.log(req.body);
     await BoriGoods.findByIdAndUpdate(
       bori_goods_id, {
         $inc: {

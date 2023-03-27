@@ -23,7 +23,7 @@ POST /bori_goods
   }
 }
 */
-router.post('/', isLoggedIn, boriGoodsUpload.single('bori_goods_images'), makeBoriGoods);
+router.post('/', isLoggedIn, boriGoodsUpload.single('img'), makeBoriGoods);
 
 /*
 PATCH /bori_goods/like
