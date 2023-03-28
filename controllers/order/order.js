@@ -1,5 +1,6 @@
 const Order = require("../../schemas/order/order");
-const Cart = require("../../schemas/user/cart")
+const Cart = require("../../schemas/user/cart");
+const User = require("../../schemas/user/user");
 //상세주문 정보는 배열의 형태로 관리한다.
 //const OrderDetail = require("../schemas/order/orderDetail");
 const { asyncForEach } = require('../../utils/asyncForEach');
@@ -15,6 +16,31 @@ exports.getOrder = async (req, res, next) => {
     return next(error);
   };
 };
+
+exports.getAllOrder = async (req, res, next) => {
+  try {
+    User.findOne({
+      nick: req.body.nick
+    })
+    const order = await Order.find({}).select('-user_id');
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+};
+
+exports.getAllOrderForSearch = async (req, res, next) => {
+  try {
+    const order = await Order.find({
+    }).select('-user_id');
+    return res.status(200).json(order);
+  } catch (error) {
+    console.error(error);
+    return next(error);
+  }
+};
+
 
 /*
 {
@@ -77,7 +103,7 @@ exports.deleteOrder = async (req, res, next) => {
   ]
 */
 exports.makeOrder = async (req, res, next) => {
-  const { bori_goods, price } = req.body
+  const { bori_goods, price, deliver_address } = req.body
   try {
     await asyncForEach(bori_goods, async (goods) => {
       await Cart.findOneAndRemove({
@@ -89,7 +115,10 @@ exports.makeOrder = async (req, res, next) => {
         user_id: req.session.passport.user,
         price: price,
         order_status: '배송준비',
-        order_detail: bori_goods
+        order_detail: bori_goods,
+        phone_number: deliver_address.phone_number,
+        address: deliver_address.address,
+        address_detail: deliver_address.address_detail
       }
     );
     res.status(200).json({message: `정상적으로 주문됐습니다.`});

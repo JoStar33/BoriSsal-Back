@@ -21,6 +21,15 @@ const orderSchema = new Schema({
     required: true,
     default: '배송준비'
   },
+  phone_number: {
+    type: String,
+  },
+  address: {
+    type: String,
+  },
+  address_detail: {
+    type: String,
+  },
   order_detail: {
     type: Array,
     default: []
