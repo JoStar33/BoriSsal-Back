@@ -3,7 +3,15 @@ const { isLoggedIn } = require("../../middlewares");
 const { getBoriGallery, getBoriGalleryById, makeBoriGallery, updateBoriGallery,
   updateBoriGalleryImage, deleteBoriGallery, likeBoriGallery, dislikeBoriGallery } = require("../../controllers/bori_gallery/boriGallery")
 const router = express.Router();
-const { upload } = require("../../utils/uploadImage")
+const { boriGalleryUpload } = require("../../utils/uploadImage")
+const fs = require('fs');
+
+try {
+  fs.readdirSync('bori_gallery_images');
+} catch (error) {
+  console.error('bori_gallery_images 폴더가 없어 bori_gallery_images 폴더를 생성합니다.');
+  fs.mkdirSync('bori_gallery_images');
+};
 
 //GET /bori-gallery
 router.get('/', getBoriGallery);
@@ -20,36 +28,29 @@ POST /bori-gallery
   }
 }
 */
-router.post('/', isLoggedIn, upload.single('img'), makeBoriGallery);
+router.post('/', isLoggedIn, boriGalleryUpload.single('bori_gallery_images'), makeBoriGallery);
 
 /*
 PATCH /bori-gallery
 {
   bori_gallery: {
-    bori_gallery_id: ~~~,
     bori_gallery_title: ~~~,
     bori_gallery_desc: ~~~,
   }
 }
 */
-router.patch('/', isLoggedIn, updateBoriGallery);
+router.put('/:bori_gallery_id', isLoggedIn, updateBoriGallery);
 
 /*
-PATCH /bori-gallery
-{
-  bori_gallery_id: ~~~
-}
+PATCH /bori-gallery/image/:bori_gallery_id
 */
-router.patch('/', isLoggedIn, upload.single('img'), updateBoriGalleryImage);
+router.patch('/image/:bori_gallery_id', isLoggedIn, boriGalleryUpload.single('bori_gallery_images'), updateBoriGalleryImage);
 
 
 /*
-DELETE /bori-gallery
-{
-  bori_gallery_id: ~~~
-}
+DELETE /bori-gallery/:bori_gallery_id
 */
-router.delete('/', isLoggedIn, deleteBoriGallery);
+router.delete('/:bori_gallery_id', isLoggedIn, deleteBoriGallery);
 
 /*
 PATCH /bori-gallery/like

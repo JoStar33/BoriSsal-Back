@@ -24,13 +24,13 @@ exports.getBoriGalleryById = async (req, res, next) => {
 };
 
 exports.makeBoriGallery = async (req, res, next) => {
-  const { bori_gallery } = req.body;
+  const bori_gallery = JSON.parse(req.body.bori_gallery);
   try {
     const boriGallery = await BoriGallery.create({
       user_id: req.session.passport.user,
       bori_gallery_title: bori_gallery.bori_gallery_title,
       bori_gallery_desc: bori_gallery.bori_gallery_desc,
-      bori_gallery_image: `/img/${req.file.filename}`
+      bori_gallery_image: `/bori_gallery_images/${req.file.filename}`
     });
     return res.status(200).json(boriGallery);
   } catch(error) {
@@ -40,11 +40,11 @@ exports.makeBoriGallery = async (req, res, next) => {
 };
 
 exports.updateBoriGallery = async (req, res, next) => {
-  const { bori_gallery } = req.body;
+  const { bori_gallery_title, bori_gallery_desc } = req.body;
   try {  
-    const boriGallery = await BoriGallery.findByIdAndUpdate(bori_gallery.bori_gallery_id, {
-      bori_gallery_title: bori_gallery.bori_gallery_title,
-      bori_gallery_desc: bori_gallery.bori_gallery_desc
+    const boriGallery = await BoriGallery.findByIdAndUpdate(req.params.bori_gallery_id, {
+      bori_gallery_title: bori_gallery_title,
+      bori_gallery_desc: bori_gallery_desc
     });
     return res.status(200).json(boriGallery);
   } catch(error) {
@@ -56,9 +56,9 @@ exports.updateBoriGallery = async (req, res, next) => {
 exports.updateBoriGalleryImage = async (req, res, next) => {
   try {
     await User.findByIdAndUpdate(req.body.bori_gallery_id, {
-      profile_image: `/img/${req.file.filename}`,
+      profile_image: `/bori_gallery_images/${req.file.filename}`,
     });
-    res.status.json(`/img/${req.file.filename}`);
+    res.status.json(`/bori_gallery_images/${req.file.filename}`);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -67,7 +67,7 @@ exports.updateBoriGalleryImage = async (req, res, next) => {
 
 exports.deleteBoriGallery = async (req, res, next) => {
   try {  
-    await BoriGallery.remove({_id: req.body.bori_gallery_id});
+    await BoriGallery.remove({_id: req.params.bori_gallery_id});
     return res.status(200).json({message: "정상적으로 삭제했습니다!"});
   } catch(error) {
     console.error(error);
