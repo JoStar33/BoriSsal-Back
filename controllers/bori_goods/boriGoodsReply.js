@@ -111,7 +111,7 @@ exports.updateBoriGoodsChildReply = async (req, res, next) => {
 exports.deleteBoriGoodsReply = async (req, res, next) => {
   try {
     await BoriGoodsReply.remove({
-      _id: req.body.reply_id
+      _id: req.params.reply_id
     });
     return res.status(200).json("댓글 삭제 완료.");
   } catch(error) {

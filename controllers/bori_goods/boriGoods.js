@@ -23,8 +23,37 @@ exports.getBoriGoodsById = async (req, res, next) => {
   };
 };
 
+exports.updateBoriGoodsImage = async (req, res, next) => {
+  try {
+    await BoriGoods.findByIdAndUpdate(req.params.bori_goods_id, {
+      profile_image: `/bori_goods_images/${req.file.filename}`,
+    });
+    res.status(200).json({bori_goods_image: `/bori_goods_images/${req.file.filename}`});
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  };
+};
+
+exports.updateBoriGoods = async (req, res, next) => {
+  const { bori_goods, category_id } = req.body;
+  try {
+    await BoriGoods.findByIdAndUpdate(req.params.bori_goods_id, {
+      category_id: category_id,
+      bori_goods_name: bori_goods.bori_goods_name,
+      bori_goods_price: bori_goods.bori_goods_price,
+      bori_goods_stock: bori_goods.bori_goods_stock,
+      bori_goods_desc: bori_goods.bori_goods_desc,
+    });
+    res.status(200).json({ message: "업데이트 성공" });
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  };
+};
+
 exports.makeBoriGoods = async (req, res, next) => {
- const {category_id, bori_goods} = JSON.parse(req.body.bori_goods);
+  const {category_id, bori_goods} = JSON.parse(req.body.bori_goods);
   try {
     const exBoriGoods = await BoriGoods.find({
       bori_goods_name: bori_goods.bori_goods_name
@@ -82,6 +111,17 @@ exports.likeBoriGoods = async (req, res, next) => {
   }
 };
 
+exports.deleteBoriGoods = async (req, res, next) => {
+  try {
+    await BoriGoods.remove({
+      _id: req.params.bori_goods_id
+    });
+    return res.status(200).json("댓글 삭제 완료.");
+  } catch(error) {
+    console.error(error);
+    return next(error);
+  }
+};
 
 exports.dislikeBoriGoods = async (req, res, next) => {
   const {bori_goods_id} = req.body;
