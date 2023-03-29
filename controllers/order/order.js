@@ -1,6 +1,5 @@
 const Order = require("../../schemas/order/order");
 const Cart = require("../../schemas/user/cart");
-const User = require("../../schemas/user/user");
 //상세주문 정보는 배열의 형태로 관리한다.
 //const OrderDetail = require("../schemas/order/orderDetail");
 const { asyncForEach } = require('../../utils/asyncForEach');
@@ -17,24 +16,34 @@ exports.getOrder = async (req, res, next) => {
   };
 };
 
-exports.getAllOrder = async (req, res, next) => {
-  try {
-    User.findOne({
-      nick: req.body.nick
-    })
-    const order = await Order.find({}).select('-user_id');
-    return res.status(200).json(order);
-  } catch (error) {
-    console.error(error);
-    return next(error);
-  }
-};
-
 exports.getAllOrderForSearch = async (req, res, next) => {
+  const { email, start_date, end_date } = req.query;
   try {
-    const order = await Order.find({
-    }).select('-user_id');
-    return res.status(200).json(order);
+    const regex = (email) => new RegExp(`.*${email}.*`);
+    const emailRegex = regex(email);
+    let overflow = false;
+    if(start_date !== "null") {
+      const order = await Order.find({ 
+        email: { $regex: emailRegex },
+        order_date: {
+          $gte: start_date, 
+          $lte: end_date
+        }
+      }).select('-user_id').sort({createdAt: 1});
+      if (parseInt(req.params.limit) * 10 > order.length) {
+        overflow = true
+      };
+      return res.status(200).json({ order: order, overflow: overflow });
+    }
+    else {
+      const order = await Order.find({ 
+        email: { $regex: emailRegex }
+      }).select('-user_id').sort({createdAt: 1});
+      if (parseInt(req.params.limit) * 10 > order.length) {
+        overflow = true
+      };
+      return res.status(200).json({ order: order, overflow: overflow });
+    }
   } catch (error) {
     console.error(error);
     return next(error);
@@ -103,7 +112,7 @@ exports.deleteOrder = async (req, res, next) => {
   ]
 */
 exports.makeOrder = async (req, res, next) => {
-  const { bori_goods, price, deliver_address } = req.body
+  const { bori_goods, price, deliver_address, email } = req.body
   try {
     await asyncForEach(bori_goods, async (goods) => {
       await Cart.findOneAndRemove({
@@ -113,6 +122,7 @@ exports.makeOrder = async (req, res, next) => {
     await Order.create(
       {
         user_id: req.session.passport.user,
+        email: email,
         price: price,
         order_status: '배송준비',
         order_detail: bori_goods,

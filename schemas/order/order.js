@@ -8,6 +8,11 @@ const orderSchema = new Schema({
     required: true,
     ref: "User",
   },
+  email: {
+    type: String,
+    allowNull: true,
+    unique: true,
+  },
   price: {
     type: Number,
     default: 0

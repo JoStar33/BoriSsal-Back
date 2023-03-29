@@ -1,10 +1,11 @@
 const express = require("express");
-const { getOrder, getOrderById, deleteOrder, updateOrderStatus, makeOrder } = require("../../controllers/order/order");
+const { getOrder, getAllOrderForSearch, getOrderById, deleteOrder, updateOrderStatus, makeOrder } = require("../../controllers/order/order");
 const router = express.Router();
 
 //GET /order/
 router.get('/', getOrder);
 
+router.get('/:limit', getAllOrderForSearch);
 
 //GET /order/order-detail/
 router.get('/order-detail/', getOrderById);
