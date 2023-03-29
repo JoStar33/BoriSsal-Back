@@ -1,5 +1,6 @@
 const BoriGallery = require("../../schemas/bori_gallery/boriGallery");
 const User = require("../../schemas/user/user");
+const fs = require('fs');
 
 exports.getBoriGallery = async (req, res, next) => {
   try {
@@ -55,10 +56,15 @@ exports.updateBoriGallery = async (req, res, next) => {
 
 exports.updateBoriGalleryImage = async (req, res, next) => {
   try {
-    await User.findByIdAndUpdate(req.body.bori_gallery_id, {
-      profile_image: `/bori_gallery_images/${req.file.filename}`,
+    const boriGallery = await BoriGallery.findById(req.body.bori_gallery_id);
+    fs.unlink(`./bori_gallery_images/${boriGallery.bori_gallery_image}`,(error)=>{
+      console.error(error);
+      return next(error);
     });
-    res.status.json(`/bori_gallery_images/${req.file.filename}`);
+    await BoriGallery.findByIdAndUpdate(req.body.bori_gallery_id, {
+      bori_gallery_image: `/bori_gallery_images/${req.file.filename}`,
+    });
+    res.status(200).json(`/bori_gallery_images/${req.file.filename}`);
   } catch(error) {
     console.error(error);
     return next(error);
@@ -66,7 +72,12 @@ exports.updateBoriGalleryImage = async (req, res, next) => {
 };
 
 exports.deleteBoriGallery = async (req, res, next) => {
-  try {  
+  try {
+    const boriGallery = await BoriGallery.findById(req.body.bori_gallery_id);
+    fs.unlink(`./bori_gallery_images/${boriGallery.bori_gallery_image}`,(error)=>{
+      console.error(error);
+      return next(error);
+    });
     await BoriGallery.remove({_id: req.params.bori_gallery_id});
     return res.status(200).json({message: "정상적으로 삭제했습니다!"});
   } catch(error) {
