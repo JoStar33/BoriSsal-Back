@@ -51,7 +51,7 @@ exports.passwordChange = async (req, res, next) => {
         .status(400)
         .json({ message: "잘못된 회원정보입니다." });
     }
-    const result = await bcrypt.compare(password, user.password);
+    const result = bcrypt.compare(password, user.password);
     if (!result) {
       return res
         .status(400)

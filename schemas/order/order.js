@@ -10,8 +10,7 @@ const orderSchema = new Schema({
   },
   email: {
     type: String,
-    allowNull: true,
-    unique: true,
+    allowNull: true
   },
   price: {
     type: Number,
