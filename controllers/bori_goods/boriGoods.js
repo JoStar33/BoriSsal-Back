@@ -120,9 +120,8 @@ exports.likeBoriGoods = async (req, res, next) => {
 exports.deleteBoriGoods = async (req, res, next) => {
   try {
     const boriGoods = await BoriGoods.findById(req.params.bori_goods_id);
-    fs.unlink(`./bori_goods_images/${boriGoods.bori_goods_image}`,(error)=>{
+    fs.unlink(`./${boriGoods.bori_goods_image}`,(error)=>{
       console.error(error);
-      return next(error);
     })
     await BoriGoods.remove({
       _id: req.params.bori_goods_id

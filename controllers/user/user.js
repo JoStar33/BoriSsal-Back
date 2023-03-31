@@ -27,11 +27,10 @@ exports.modifyUserNick = async (req, res, next) => {
 
 exports.setUserProfileImage = async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.bori_goods_id);
+    const user = await User.findById(req.session.passport.user);
     if(user.profile_image) {
-      fs.unlink(`./uploads/${user.profile_image}`,(error)=>{
+      fs.unlink(`./${user.profile_image}`,(error)=>{
         console.error(error);
-        return next(error);
       });
     }
     await User.findByIdAndUpdate(req.session.passport.user, {

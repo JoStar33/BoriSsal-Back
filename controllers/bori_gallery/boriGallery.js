@@ -57,7 +57,7 @@ exports.updateBoriGallery = async (req, res, next) => {
 exports.updateBoriGalleryImage = async (req, res, next) => {
   try {
     const boriGallery = await BoriGallery.findById(req.body.bori_gallery_id);
-    fs.unlink(`./bori_gallery_images/${boriGallery.bori_gallery_image}`,(error)=>{
+    fs.unlink(`./${boriGallery.bori_gallery_image}`,(error)=>{
       console.error(error);
       return next(error);
     });
@@ -73,10 +73,9 @@ exports.updateBoriGalleryImage = async (req, res, next) => {
 
 exports.deleteBoriGallery = async (req, res, next) => {
   try {
-    const boriGallery = await BoriGallery.findById(req.body.bori_gallery_id);
-    fs.unlink(`./bori_gallery_images/${boriGallery.bori_gallery_image}`,(error)=>{
+    const boriGallery = await BoriGallery.findById(req.params.bori_gallery_id);
+    fs.unlink(`./${boriGallery.bori_gallery_image}`, (error)=>{
       console.error(error);
-      return next(error);
     });
     await BoriGallery.remove({_id: req.params.bori_gallery_id});
     return res.status(200).json({message: "정상적으로 삭제했습니다!"});
