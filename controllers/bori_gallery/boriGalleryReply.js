@@ -6,7 +6,7 @@ exports.getBoriGalleryReply = async (req, res, next) => {
     const boriGalleryReply = await BoriGalleryReply.find({
       bori_gallery_id: req.params.bori_gallery_id
     }).limit(parseInt(req.params.limit) * 10).sort({_id: -1});
-    if (parseInt(req.params.limit) * 10 > boriGoodsReply.length) {
+    if (parseInt(req.params.limit) * 10 > boriGalleryReply.length) {
       overflow = true
     }
     return res.status(200).json({bori_gallery_reply: boriGalleryReply, overflow: overflow});
