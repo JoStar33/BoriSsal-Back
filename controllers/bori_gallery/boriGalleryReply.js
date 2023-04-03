@@ -3,6 +3,7 @@ const BoriGalleryReply = require("../../schemas/bori_gallery/boriGalleryReply");
 //보리갤러리에 대한 모든 댓글정보를 가지고 온다.
 exports.getBoriGalleryReply = async (req, res, next) => {
   try {
+    let overflow = false
     const boriGalleryReply = await BoriGalleryReply.find({
       bori_gallery_id: req.params.bori_gallery_id
     }).limit(parseInt(req.params.limit) * 10).sort({_id: -1});
@@ -107,7 +108,7 @@ exports.updateBoriGalleryChildReply = async (req, res, next) => {
 exports.deleteBoriGalleryReply = async (req, res, next) => {
   try {
     await BoriGalleryReply.remove({
-      _id: req.body.reply_id
+      _id: req.params.reply_id
     });
     return res.status(200).json({message: "댓글 삭제 완료."});
   } catch(error) {
@@ -124,8 +125,8 @@ exports.deleteBoriGalleryReply = async (req, res, next) => {
 */
 exports.deleteBoriGalleryChildReply = async (req, res, next) => {
   try {
-    await BoriGalleryReply.findByIdAndUpdate(req.body.reply_id, {
-      $pull: { user_like: req.body.child_reply_id }
+    await BoriGalleryReply.findByIdAndUpdate(req.params.reply_id, {
+      $pull: { user_like: req.params.child_reply_id }
     });
     return res.status(200).json({message: "대댓글 삭제 완료."});
   } catch(error) {

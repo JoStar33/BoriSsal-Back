@@ -89,7 +89,9 @@ exports.likeBoriGallery = async (req, res, next) => {
   try {
     await BoriGallery.findByIdAndUpdate(
       req.body.bori_gallery_id, {
-        bori_gallery_like: { $inc: 1 }
+        $inc: {
+          bori_gallery_like: 1
+        }
       }
     );
     const user = await User.findByIdAndUpdate(
@@ -110,7 +112,9 @@ exports.dislikeBoriGallery = async (req, res, next) => {
   try {
     await BoriGallery.findByIdAndUpdate(
       req.body.bori_gallery_id, {
-        bori_gallery_like: { $inc: -1 }
+        $inc: {
+          bori_gallery_like: -1
+        }
       }
     );
     const user = await User.findByIdAndUpdate(

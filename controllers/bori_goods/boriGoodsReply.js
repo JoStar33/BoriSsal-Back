@@ -1,4 +1,5 @@
-const BoriGoodsReply = require("../../schemas/bori_goods/boriGoodsReply")
+const BoriGoodsReply = require("../../schemas/bori_goods/boriGoodsReply");
+const uuid = require('node-uuid');
 
 //제품에 대한 모든 댓글정보를 가지고 온다.
 exports.getBoriGoodsReply = async (req, res, next) => {
@@ -48,6 +49,7 @@ exports.makeBoriGoodsChildReply = async (req, res, next) => {
     await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
       $push: {
         reply_child: {
+          _id: uuid.v1(),
           user_id: req.session.passport.user,
           email: req.body.email,
           content: req.body.content,
@@ -128,8 +130,8 @@ exports.deleteBoriGoodsReply = async (req, res, next) => {
 */
 exports.deleteBoriGoodsChildReply = async (req, res, next) => {
   try {
-    await BoriGoodsReply.findByIdAndUpdate(req.body.reply_id, {
-      $pull: { user_like: req.body.child_reply_id }
+    await BoriGoodsReply.findByIdAndUpdate(req.params.reply_id, {
+      $pull: { _id: req.params.child_reply_id }
     });
     return res.status(200).json({
       message: "대댓글 삭제 완료."
