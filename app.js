@@ -8,6 +8,8 @@ const session = require('express-session');
 
 const dotenv = require('dotenv');
 const passport = require('passport');
+const helmet = require('helmet');
+const hpp = require('hpp');
 
 dotenv.config();
 //user
@@ -30,7 +32,11 @@ const app = express();
 passportConfig(); // 패스포트 설정
 app.set('port', process.env.PORT || 3030);
 connect();
-
+if (process.env.NODE_ENV === "production") {
+  app.use(morgan('combined'));
+  app.use(helmet({contentSecurityPolicy: false}));
+  app.use(hpp());
+}
 app.use(morgan('dev'));
 app.use('/img', express.static(path.join(__dirname, 'uploads')));
 app.use('/bori_goods_images', express.static(path.join(__dirname, 'bori_goods_images')));
@@ -38,12 +44,12 @@ app.use('/bori_gallery_images', express.static(path.join(__dirname, 'bori_galler
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://127.0.0.1:5173'],
+  origin: [process.env.REDIRECT_URL],
   credentials: true,  // 출처 허용 옵션
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 const days = 0.25;
-app.use(session({
+const sessionOption = {
   secret: process.env.COOKIE_SECRET || config.sessionSecretKey,
   resave: false,
   saveUninitialized: false,
@@ -52,7 +58,12 @@ app.use(session({
     httpOnly: true,
     secure: false,
   },
-}));
+}
+if (process.env.NODE_ENV === "production") {
+  sessionOption.proxy = true;
+  sessionOption.cookie.secure = true;
+} 
+app.use(session(sessionOption));
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
 app.use(passport.session());

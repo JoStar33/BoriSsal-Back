@@ -60,7 +60,7 @@ exports.getAllOrderForSearch = async (req, res, next) => {
 exports.updateOrderStatus = async (req, res, next) => {
   const { order_id, order_status } = req.body;
   try {
-    await Order.findOneAndUpdate(order_id, {
+    await Order.findByIdAndUpdate(order_id, {
       order_status: order_status
     });
     return res.status(200).json({
