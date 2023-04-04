@@ -18,6 +18,9 @@ const redisClient = redis.createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
   password: process.env.REDIS_PASSWORD
 });
+redisClient.connect().then(() => {
+  console.log("ok");
+});
 //user
 const authRouter = require('./routes/user/auth');
 const cartRouter = require('./routes/user/cart');
@@ -50,7 +53,7 @@ app.use('/bori_gallery_images', express.static(path.join(__dirname, 'bori_galler
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
 app.use(cors({
-  origin: [process.env.REDIRECT_URL],
+  origin: "*",
   credentials: true,  // 출처 허용 옵션
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
