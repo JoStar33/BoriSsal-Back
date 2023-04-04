@@ -5,7 +5,7 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production PORT=80 pm2 start app.js -i 0",
     "dev": "nodemon server",
-    "deploy": "npx pm2-runtime start ecosystem.config.js --env production"
+    "deploy": "npx pm2-runtime start ecosystem.config.js"
   },
   "author": "Zero Cho",
   "license": "ISC",
