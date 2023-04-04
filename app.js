@@ -18,9 +18,7 @@ const redisClient = redis.createClient({
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
   password: process.env.REDIS_PASSWORD
 });
-redisClient.connect().then(() => {
-  console.log("ok");
-});
+redisClient.connect().catch(console.error);
 //user
 const authRouter = require('./routes/user/auth');
 const cartRouter = require('./routes/user/cart');
