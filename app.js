@@ -5,13 +5,18 @@ const path = require('path');
 const connect = require('./schemas');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-
 const dotenv = require('dotenv');
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
+const redis = require('redis');
+const RedisStore = require('redis')(session);
 
 dotenv.config();
+const redisClient = redis.createClient({
+  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
+  password: process.env.REDIS_PASSWORD
+});
 //user
 const authRouter = require('./routes/user/auth');
 const cartRouter = require('./routes/user/cart');
@@ -58,6 +63,7 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
+  store: new RedisStore({client: redisClient })
 }
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
