@@ -1,9 +1,10 @@
 const mongoose = require('mongoose');
 
 const connect = () => {
-  if (process.env.NODE_ENV !== 'boriGoodsion') {
+  if (process.env.NODE_ENV !== 'production') {
     mongoose.set('debug', true);
   }
+  mongoose.set("strictQuery", false);
   mongoose.connect(process.env.MONGODB_CONNECT_KEY, {
     dbName: 'bori_ssal',
     useNewUrlParser: true,
