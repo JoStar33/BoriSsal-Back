@@ -15,6 +15,7 @@ const RedisStore = require('connect-redis')(session);
 dotenv.config();
 const redisClient = redis.createClient({
   legacyMode: true,
+  disableOfflineQueue: true,
   url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
   password: process.env.REDIS_PASSWORD
 });
