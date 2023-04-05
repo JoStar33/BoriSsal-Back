@@ -50,7 +50,10 @@ app.use('/bori_goods_images', express.static(path.join(__dirname, 'bori_goods_im
 app.use('/bori_gallery_images', express.static(path.join(__dirname, 'bori_gallery_images')));
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
-app.use(cors());
+app.use(cors({
+  origin: "*",
+  credentials: true
+}));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 const days = 0.25;
 const sessionOption = {
