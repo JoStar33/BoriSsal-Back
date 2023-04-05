@@ -58,8 +58,7 @@ const sessionOption = {
   cookie: {
     expires: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
     httpOnly: false,
-    secure: false,
-    sameSite: 'none'
+    secure: false
   },
   store: mongoStore.create({
     mongoUrl:
@@ -68,6 +67,7 @@ const sessionOption = {
 }
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
+  sessionOption.cookie.sameSite = 'none';
   sessionOption.cookie.secure = true;
 } 
 app.set('trust proxy', 1);
