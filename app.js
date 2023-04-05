@@ -67,7 +67,7 @@ const sessionOption = {
 }
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
-  sessionOption.cookie.secure = true;
+  app.enable('trust proxy');
 } 
 app.use(session(sessionOption));
 app.use(express.urlencoded({ extended: false }));
