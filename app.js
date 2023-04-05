@@ -55,7 +55,9 @@ app.use('/bori_gallery_images', express.static(path.join(__dirname, 'bori_galler
 app.use(express.json());
 //전체 허용의 경우는 origin: true를 주자.
 app.use(cors({
-  origin: "*",
+  origin: [
+    process.env.REDIRECT_URL
+  ],
   credentials: true
 }));
 app.use(cookieParser(process.env.COOKIE_SECRET));

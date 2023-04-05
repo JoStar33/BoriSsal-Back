@@ -7,8 +7,8 @@
     "dev": "nodemon server",
     "deploy": "npx pm2-runtime start ecosystem.config.js"
   },
-  "author": "Zero Cho",
-  "license": "ISC",
+  "author": "Jostar",
+  "license": "Jostar",
   "dependencies": {
     "bcrypt": "^5.0.0",
     "connect-redis": "^6.1.3",
