@@ -9,21 +9,9 @@ const dotenv = require('dotenv');
 const passport = require('passport');
 const helmet = require('helmet');
 const hpp = require('hpp');
-const redis = require('redis');
-const RedisStore = require('connect-redis')(session);
+const mongoStore = require('connect-mongo');
 
 dotenv.config();
-const redisClient = redis.createClient({
-  legacyMode: true,
-  disableOfflineQueue: true,
-  url: `redis://${process.env.REDIS_HOST}:${process.env.REDIS_PORT}`,
-  password: process.env.REDIS_PASSWORD
-});
-redisClient.connect().then(() => {
-  console.log("redis-connect-success");
-}).catch((err) => {
-  console.error(err)
-});
 //user
 const authRouter = require('./routes/user/auth');
 const cartRouter = require('./routes/user/cart');
@@ -72,7 +60,10 @@ const sessionOption = {
     httpOnly: true,
     secure: false,
   },
-  store: new RedisStore({client: redisClient })
+  store: mongoStore.create({
+    mongoUrl:
+      process.env.MONGODB_CONNECT_KEY
+  }),
 }
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
