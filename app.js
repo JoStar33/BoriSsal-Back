@@ -67,8 +67,8 @@ const sessionOption = {
 }
 if (process.env.NODE_ENV === "production") {
   sessionOption.proxy = true;
-  app.enable('trust proxy');
 } 
+app.set('trust proxy', 1);
 app.use(session(sessionOption));
 app.use(express.urlencoded({ extended: false }));
 app.use(passport.initialize());
