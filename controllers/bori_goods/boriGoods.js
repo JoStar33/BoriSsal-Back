@@ -1,6 +1,6 @@
 const BoriGoods = require("../../schemas/bori_goods/boriGoods");
 const User = require("../../schemas/user/user");
-const fs = require('fs');
+const { deleteImage } = require('../../utils/uploadImage');
 
 exports.getBoriGoods = async (req, res, next) => {
   try {
@@ -27,10 +27,7 @@ exports.getBoriGoodsById = async (req, res, next) => {
 exports.updateBoriGoodsImage = async (req, res, next) => {
   try {
     const boriGoods = await BoriGoods.findById(req.params.bori_goods_id);
-    fs.unlink(`./bori_goods_images/${boriGoods.bori_goods_image}`,(error)=>{
-      console.error(error);
-      return next(error);
-    });
+    deleteImage(boriGoods.bori_goods_image);
     await BoriGoods.findByIdAndUpdate(req.params.bori_goods_id, {
       profile_image: `/bori_goods_images/${req.file.filename}`,
     });
@@ -120,9 +117,7 @@ exports.likeBoriGoods = async (req, res, next) => {
 exports.deleteBoriGoods = async (req, res, next) => {
   try {
     const boriGoods = await BoriGoods.findById(req.params.bori_goods_id);
-    fs.unlink(`./${boriGoods.bori_goods_image}`,(error)=>{
-      console.error(error);
-    })
+    deleteImage(boriGoods.bori_goods_image);
     await BoriGoods.remove({
       _id: req.params.bori_goods_id
     });

@@ -3,14 +3,6 @@ const { isLoggedIn } = require("../../middlewares");
 const { getBoriGoods, getBoriGoodsById, deleteBoriGoods, makeBoriGoods, updateBoriGoods, likeBoriGoods, dislikeBoriGoods, updateBoriGoodsImage } = require("../../controllers/bori_goods/boriGoods")
 const router = express.Router();
 const { boriGoodsUpload } = require("../../utils/uploadImage")
-const fs = require('fs');
-
-try {
-  fs.readdirSync('bori_goods_images');
-} catch (error) {
-  console.error('bori_goods_images 폴더가 없어 bori_goods_images 폴더를 생성합니다.');
-  fs.mkdirSync('bori_goods_images');
-};
 
 //GET /bori_goods
 router.get('/', getBoriGoods);

@@ -3,16 +3,7 @@ const { isLoggedIn } = require("../../middlewares");
 //const multer = require('multer');
 const { modifyUserNick, setUserProfileImage, getUserInfo } = require("../../controllers/user/user")
 const router = express.Router();
-const { upload } = require("../../utils/uploadImage");
-const fs = require('fs');
-
-try {
-  fs.readdirSync('uploads');
-} catch (error) {
-  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
-  fs.mkdirSync('uploads');
-};
-
+const { upload } = require("../../utils/uploadImage")
 
 //GET /user/
 router.get('/', isLoggedIn, getUserInfo);

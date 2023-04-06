@@ -4,14 +4,6 @@ const { getBoriGallery, getBoriGalleryById, makeBoriGallery, updateBoriGallery,
   updateBoriGalleryImage, deleteBoriGallery, likeBoriGallery, dislikeBoriGallery } = require("../../controllers/bori_gallery/boriGallery")
 const router = express.Router();
 const { boriGalleryUpload } = require("../../utils/uploadImage")
-const fs = require('fs');
-
-try {
-  fs.readdirSync('bori_gallery_images');
-} catch (error) {
-  console.error('bori_gallery_images 폴더가 없어 bori_gallery_images 폴더를 생성합니다.');
-  fs.mkdirSync('bori_gallery_images');
-};
 
 //GET /bori-gallery
 router.get('/', getBoriGallery);

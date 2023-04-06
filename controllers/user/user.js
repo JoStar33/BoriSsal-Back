@@ -1,9 +1,8 @@
 const User = require("../../schemas/user/user");
-const fs = require('fs');
+const { deleteImage } = require('../../utils/uploadImage');
 
 exports.getUserInfo = async (req, res, next) => {
   try {
-    console.log(req.session);
     const user = await User.findById(req.session.passport.user).select('-_id email sns_id nick profile_image created_at user_bori_goods_like user_bori_gallery_like');
     return res.status(200).json(user);
   } catch(error) {
@@ -29,11 +28,7 @@ exports.modifyUserNick = async (req, res, next) => {
 exports.setUserProfileImage = async (req, res, next) => {
   try {
     const user = await User.findById(req.session.passport.user);
-    if(user.profile_image) {
-      fs.unlink(`./${user.profile_image}`,(error)=>{
-        console.error(error);
-      });
-    }
+    deleteImage(user.profile_image);
     await User.findByIdAndUpdate(req.session.passport.user, {
       profile_image: `/img/${req.file.filename}`,
     });
