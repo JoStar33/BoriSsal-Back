@@ -24,7 +24,7 @@ const storage = (originPath) => multer_s3({
 const deleteImage = (file_name) => {
   const params = {
     Bucket: process.env.S3_BUCKET_NAME,
-    Key: file_name
+    Key: file_name.substr(1)
   };
 
   try {
@@ -33,8 +33,8 @@ const deleteImage = (file_name) => {
         console.log('err: ', error, error.stack);
       } else {
         console.log(data, " 정상 삭제 되었습니다.");
-      }    
-    })        
+      }
+    });       
   } catch(err) {
     console.log(err);
     throw err;
