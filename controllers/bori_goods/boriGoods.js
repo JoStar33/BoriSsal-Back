@@ -29,9 +29,9 @@ exports.updateBoriGoodsImage = async (req, res, next) => {
     const boriGoods = await BoriGoods.findById(req.params.bori_goods_id);
     deleteImage(boriGoods.bori_goods_image);
     await BoriGoods.findByIdAndUpdate(req.params.bori_goods_id, {
-      profile_image: `/bori_goods_images/${req.file.filename}`,
+      profile_image: `/bori_goods_images/${req.file.fieldname}`,
     });
-    res.status(200).json({bori_goods_image: `/bori_goods_images/${req.file.filename}`});
+    res.status(200).json({bori_goods_image: `/bori_goods_images/${req.file.fieldname}`});
   } catch(error) {
     console.error(error);
     return next(error);
@@ -71,7 +71,7 @@ exports.makeBoriGoods = async (req, res, next) => {
         bori_goods_price: bori_goods.bori_goods_price,
         bori_goods_stock: bori_goods.bori_goods_stock,
         bori_goods_desc: bori_goods.bori_goods_desc,
-        bori_goods_image: `/bori_goods_images/${req.file.filename}`,
+        bori_goods_image: `/bori_goods_images/${req.file.fieldname}`,
       }
     );
     return res.status(200).json({

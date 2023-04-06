@@ -31,7 +31,7 @@ exports.makeBoriGallery = async (req, res, next) => {
       user_id: req.session.passport.user,
       bori_gallery_title: bori_gallery.bori_gallery_title,
       bori_gallery_desc: bori_gallery.bori_gallery_desc,
-      bori_gallery_image: `/bori_gallery_images/${req.file.filename}`
+      bori_gallery_image: `/bori_gallery_images/${req.file.fieldname}`
     });
     return res.status(200).json(boriGallery);
   } catch(error) {
@@ -59,9 +59,9 @@ exports.updateBoriGalleryImage = async (req, res, next) => {
     const boriGallery = await BoriGallery.findById(req.body.bori_gallery_id);
     deleteImage(boriGallery.bori_gallery_image);
     await BoriGallery.findByIdAndUpdate(req.body.bori_gallery_id, {
-      bori_gallery_image: `/bori_gallery_images/${req.file.filename}`,
+      bori_gallery_image: `/bori_gallery_images/${req.file.fieldname}`,
     });
-    res.status(200).json(`/bori_gallery_images/${req.file.filename}`);
+    res.status(200).json(`/bori_gallery_images/${req.file.fieldname}`);
   } catch(error) {
     console.error(error);
     return next(error);
