@@ -30,9 +30,9 @@ exports.setUserProfileImage = async (req, res, next) => {
     const user = await User.findById(req.session.passport.user);
     deleteImage(user.profile_image);
     await User.findByIdAndUpdate(req.session.passport.user, {
-      profile_image: `/img/${req.file.fieldname}`,
+      profile_image: `/${req.file.key}`,
     });
-    res.status(200).json({profile_image: `/img/${req.file.fieldname}`});
+    res.status(200).json({profile_image: `/${req.file.key}`});
   } catch(error) {
     console.error(error);
     return next(error);
