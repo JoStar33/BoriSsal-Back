@@ -55,21 +55,23 @@ const sessionOption = {
   secret: process.env.COOKIE_SECRET || config.sessionSecretKey,
   resave: false,
   saveUninitialized: false,
+  proxy: true,
   cookie: {
     expires: new Date(Date.now() + days * 24 * 60 * 60 * 1000),
     httpOnly: false,
-    secure: false
+    secure: true,
+    sameSite: 'none'
   },
   store: mongoStore.create({
     mongoUrl:
       process.env.MONGODB_CONNECT_KEY
   }),
 }
-if (process.env.NODE_ENV === "production") {
-  sessionOption.proxy = true;
-  sessionOption.cookie.sameSite = 'none';
-  sessionOption.cookie.secure = true;
-} 
+// if (process.env.NODE_ENV === "production") {
+//   sessionOption.proxy = true;
+//   sessionOption.cookie.sameSite = 'none';
+//   sessionOption.cookie.secure = true;
+// } 
 app.set('trust proxy', 1);
 app.use(session(sessionOption));
 app.use(express.urlencoded({ extended: false }));
