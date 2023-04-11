@@ -24,7 +24,7 @@ const storage = (originPath) => multer_s3({
 const deleteImage = (file_name) => {
   const params = {
     Bucket: process.env.S3_BUCKET_NAME,
-    Key: file_name.substr(1)
+    Key: String(file_name).substring(1)
   };
 
   try {
