@@ -148,8 +148,8 @@ exports.login = (req, res, next) => {
       return next(authError);
     }
     if (!user) {
-      return res.status(500).json({
-        code: 500,
+      return res.status(400).json({
+        code: 400,
         message: info.message,
       });
     }
@@ -203,8 +203,8 @@ exports.kakaoLogin = (req, res, next) => {
       return next(authError);
     }
     if (!user) {
-      return res.status(500).json({
-        code: 500,
+      return res.status(400).json({
+        code: 400,
         message: info.message,
       });
     }
@@ -224,8 +224,8 @@ exports.googleLogin = (req, res, next) => {
       return next(authError);
     }
     if (!user) {
-      return res.status(500).json({
-        code: 500,
+      return res.status(400).json({
+        code: 400,
         message: info.message,
       });
     }
