@@ -4,7 +4,7 @@ const { deleteImage } = require('../../utils/uploadImage');
 
 exports.getBoriGallery = async (req, res, next) => {
   try {
-    const boriGallery = await BoriGallery.find({});
+    const boriGallery = await BoriGallery.find({}).sort({_id: -1});;
     return res.status(200).json(boriGallery);
   } catch(error) {
     console.error(error);
